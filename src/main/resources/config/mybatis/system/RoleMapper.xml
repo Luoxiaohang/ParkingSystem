@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clubAppSys.modules.system.mapper.RoleMapper">
+	<resultMap id="BaseResultMap" type="com.clubAppSys.modules.system.model.Role">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<id column="tag" property="tag" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+	</resultMap>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from role
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.clubAppSys.modules.system.model.Role">
+		insert into role (id,
+		name,tag)
+		values (#{id,jdbcType=INTEGER},
+		#{name,jdbcType=VARCHAR},#{tag,jdbcType=INTEGER})
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="com.clubAppSys.modules.system.model.Role">
+		update role
+		set
+		name = #{name,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+
+
+	<update id="updateUserSysRole">
+		update users
+		set
+		roleId =
+		#{roleId,jdbcType=INTEGER}
+		where
+		id =#{userId,jdbcType=INTEGER}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select id, name
+		from role
+		where id =
+		#{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select id, name,tag
+		from role
+	</select>
+
+	<select id="getAllClubRoles" resultMap="BaseResultMap">
+		select id, name,tag
+		from
+		role where tag=1
+	</select>
+
+	<select id="getFunctionCountByRoleId" resultType="Integer">
+		select
+		IFNULL(sum(1),0)
+		from
+		role_functions
+		where
+		role_functions.roleId=#{roleId}
+	</select>
+
+	<select id="getFunctionsByRoleId" resultType="Function">
+		select
+		function.id,modules.name moduleName,
+		function.text
+		from
+		role,role_functions,function,modules
+		where
+		role.id=role_functions.roleId and
+		role_functions.functionId=function.id
+		and role.id=#{roleId}
+		and
+		function.moduleId=modules.id
+		and function.id>#{start} limit #{limit}
+	</select>
+
+	<insert id="addRoleFunction" parameterType="RoleFunctions">
+		insert into
+		role_functions
+		(id, functionId, roleId,moduleId
+		)
+		values
+		(#{id,jdbcType=INTEGER},
+		#{functionId,jdbcType=INTEGER},
+		#{roleId,jdbcType=INTEGER},
+		#{moduleId,jdbcType=INTEGER}
+		)
+	</insert>
+
+	<insert id="delRoleFunction" parameterType="RoleFunctions">
+		delete from
+		role_functions
+		where
+		functionId = #{functionId}
+		and roleId = #{roleId}
+	</insert>
+</mapper>

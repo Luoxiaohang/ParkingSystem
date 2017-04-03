@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clubAppSys.modules.charge.mapper.ChargeStandardMapper">
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		charging_standard
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insert" parameterType="ChargeStandard">
+		insert into charging_standard
+		(id,
+		name, statusId)
+		values
+		(#{id,jdbcType=INTEGER},
+		#{name,jdbcType=VARCHAR},
+		#{statusId,jdbcType=INTEGER}
+		)
+	</insert>
+
+	<update id="updateByPrimaryKey" parameterType="ChargeStandard">
+		update
+		charging_standard
+		set name = #{name},
+		statusId =#{statusId}
+		where id
+		=#{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultType="ChargeStandard"
+		parameterType="java.lang.Integer">
+		select charging_standard.id, name, status.text status
+		from
+		charging_standard,status
+		where id = #{id,jdbcType=INTEGER}
+		and charging_standard.statusId=status.id
+	</select>
+
+	<select id="selectAll" resultType="ChargeStandard">
+		select charging_standard.id, name, status.text status,statusId
+		from
+		charging_standard,status
+		where charging_standard.statusId = status.id
+	</select>
+
+	<select id="checkStandard" resultType="ChargeStandard">
+		select DISTINCT *
+		from
+		charging_standard
+		where
+		charging_standard.name=#{standardName}
+	</select>
+
+</mapper>

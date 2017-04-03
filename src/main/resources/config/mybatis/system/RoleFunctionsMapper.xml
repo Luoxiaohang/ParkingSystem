@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clubAppSys.modules.system.mapper.RoleFunctionsMapper">
+	<resultMap id="BaseResultMap" type="RoleFunctions">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="functionId" property="functionId" jdbcType="INTEGER" />
+		<result column="roleId" property="roleId" jdbcType="INTEGER" />
+	</resultMap>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		role_functions
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="RoleFunctions">
+		insert into role_functions
+		(id, functionId, roleId
+		)
+		values (#{id,jdbcType=INTEGER},
+		#{functionId,jdbcType=INTEGER},
+		#{roleId,jdbcType=INTEGER}
+		)
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="RoleFunctions">
+		update
+		role_functions
+		set functionId =
+		#{functionId,jdbcType=INTEGER},
+		roleId =
+		#{roleId,jdbcType=INTEGER}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select id, functionId, roleId
+		from role_functions
+		where id
+		= #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select id, functionId, roleId
+		from role_functions
+	</select>
+</mapper>

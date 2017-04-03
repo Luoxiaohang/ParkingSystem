@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clubAppSys.modules.charge.mapper.ChargeCustomizeMapper">
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		charging_customize
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insert" parameterType="ChargeCustomize">
+		insert into charging_customize
+		(startTime, endTime,chargingStandardId,commonCost,vipCost)
+		values
+		(#{startTime},
+		#{endTime},
+		#{standardId,jdbcType=INTEGER},
+		#{commonCost,jdbcType=FLOAT},
+		#{vipCost,jdbcType=FLOAT}
+		)
+	</insert>
+
+	<update id="updateByPrimaryKey" parameterType="ChargeCustomize">
+		update
+		charging_customize
+		set startTime = #{startTime},
+		endTime =#{endTime},
+		commonCost =#{commonCost},
+		vipCost =#{vipCost}
+		where id
+		=#{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultType="ChargeCustomize"
+		parameterType="java.lang.Integer">
+		select id, startTime,
+		endTime,commonCost,vipCost,chargingStandardId standardId
+		from
+		charging_customize
+	</select>
+
+	<select id="getByStandardId" resultType="ChargeCustomize"
+		parameterType="java.lang.Integer">
+		select id, startTime,
+		endTime,commonCost,vipCost,chargingStandardId standardId
+		from
+		charging_customize
+		where
+		charging_customize.chargingStandardId=#{standardId,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectAll" resultType="ChargeCustomize">
+		select id, startTime,
+		endTime,commonCost,vipCost,chargingStandardId standardId
+		from
+		charging_customize
+	</select>
+</mapper>

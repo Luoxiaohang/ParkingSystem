@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clubAppSys.modules.system.mapper.FunctionMapper">
+
+	<resultMap id="BaseResultMap" type="Function">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="text" property="text" jdbcType="VARCHAR" />
+		<result column="viewName" property="viewName" jdbcType="VARCHAR" />
+		<result column="moduleName" property="moduleName" jdbcType="VARCHAR" />
+		<result column="parentName" property="parentName" jdbcType="VARCHAR" />
+		<result column="moduleId" property="moduleId" jdbcType="INTEGER" />
+		<result column="leaf" property="leaf" jdbcType="TINYINT" />
+		<result column="parentId" property="parentId" jdbcType="INTEGER" />
+	</resultMap>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		function
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insert" parameterType="Function">
+		insert into function (id,
+		text, viewName,
+		moduleId, leaf, parentId
+		)
+		values
+		(#{id,jdbcType=INTEGER}, #{text,jdbcType=VARCHAR},
+		#{viewName,jdbcType=VARCHAR},
+		#{moduleId,jdbcType=INTEGER},
+		#{leaf,jdbcType=TINYINT}, #{parentId,jdbcType=INTEGER}
+		)
+	</insert>
+
+	<update id="updateByPrimaryKey" parameterType="Function">
+		update function
+		set text = #{text},
+		viewName =#{viewName}
+		where id =#{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select id, text, viewName, moduleId, leaf, parentId
+		from
+		function
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectAll" resultMap="BaseResultMap">
+		select id, text, viewName,
+		moduleId, leaf, parentId
+		from function
+	</select>
+
+
+
+	<select id="getFunctionsByModuleIdRoleId" resultType="Function"
+		parameterType="java.lang.Integer">
+		select DISTINCT function.*
+		from
+		role_functions,function
+		where
+		role_functions.roleId=#{roleId} and
+		role_functions.moduleId=#{moduleId} and
+		role_functions.functionId=function.id
+	</select>
+
+	<select id="getFunctionsByModuleId" resultType="Function"
+		parameterType="java.lang.Integer">
+		select function.id, text, viewName, moduleId,
+		leaf,modules.name moduleName,
+		parentId
+		from
+		function,modules
+		where
+		function.moduleId=#{moduleId} and
+		modules.id=function.moduleId
+	</select>
+
+	<select id="getFunctionList" resultType="Function">
+		select functions.*
+		,modules.name moduleName from( select child.id,
+		child.text
+		,child.viewName,child.leaf,parent.text as parentName,
+		child.moduleId
+		from function child LEFT JOIN function parent on
+		child.parentId=parent.id
+		) functions,modules where
+		functions.moduleId=modules.id
+	</select>
+
+	<select id="checkFunction" resultType="Function">
+		select DISTINCT *
+		from
+		function
+		where
+		function.moduleId=#{moduleId} and
+		function.text=#{functionName}
+	</select>
+
+</mapper>
