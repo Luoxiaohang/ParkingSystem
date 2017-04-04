@@ -14,13 +14,13 @@
 		location="classpath*:config/application.properties" />
 
 	<!-- 使用annotation 自动注册bean,并检查@Required,@Autowired的属性已被注入 -->
-	<context:component-scan base-package="com.clubAppSys.modules">
+	<context:component-scan base-package="com.fire.modules">
 		<context:exclude-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 
 	<!--spring 容器 -->
-	<bean id="springContextHolder" class="com.clubAppSys.utils.SpringContextHolder"
+	<bean id="springContextHolder" class="com.fire.utils.SpringContextHolder"
 		lazy-init="false" />
 
 	<!--配置事务 -->

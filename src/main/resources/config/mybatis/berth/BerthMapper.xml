@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.clubAppSys.modules.berth.mapper.BerthMapper">
+<mapper namespace="com.fire.modules.berth.mapper.BerthMapper">
 	<sql id="where_berth">
 		<if test="zoneId!=null ">
 			and berth.zoneId=#{zoneId}

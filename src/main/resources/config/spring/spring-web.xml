@@ -10,7 +10,7 @@
       http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
 
 	<!-- 注解扫描包 -->
-	<context:component-scan base-package="com.clubAppSys.modules.*.controller" />
+	<context:component-scan base-package="com.fire.modules.*.controller" />
 
 	<!-- 添加注解驱动 -->
 	<mvc:annotation-driven>
@@ -51,7 +51,7 @@
 			<mvc:mapping path="/User/updateSecure" />
 			<mvc:mapping path="/User/getInfo" />
 			<mvc:mapping path="/User/getSystemUserList" />
-			<bean id="loginInterceptor" class="com.clubAppSys.common.interceptor.LoginInterceptor" />
+			<bean id="loginInterceptor" class="com.fire.common.interceptor.LoginInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
 </beans>

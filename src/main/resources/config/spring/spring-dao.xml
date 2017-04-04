@@ -16,7 +16,7 @@
 
 	<!-- 指定mapper接口包 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.clubAppSys.modules.*.mapper" />
+		<property name="basePackage" value="com.fire.modules.*.mapper" />
 	</bean>
 
 	<!-- 数据源配置,使用应用内的DBCP数据库连接池 -->

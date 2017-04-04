@@ -19,6 +19,6 @@
 			/> -->
 	</settings>
 	<typeAliases>
-		<package name="com.clubAppSys.modules" />
+		<package name="com.fire.modules" />
 	</typeAliases>
 </configuration>

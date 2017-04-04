@@ -7,7 +7,7 @@
 	<classPathEntry location="${jdbc.classPath}" />
 
 	<!-- 用来指定产生一组对象的环境，多个数据库，就建立多个 context。 -->
-	<context id="clubAppSys" targetRuntime="MyBatis3Simple">
+	<context id="fire" targetRuntime="MyBatis3Simple">
 		<!-- 关闭注解信息 -->
 		<commentGenerator>
 			<property name="suppressAllComments" value="true" />
@@ -20,7 +20,7 @@
 		<!-- targetPackage为生成文件存放的文件目录 targetProject为操作的项目名称 -->
 
 		<!-- 生成model （实体） -->
-		<javaModelGenerator targetPackage="com.clubAppSys.modules.school.model"
+		<javaModelGenerator targetPackage="com.fire.modules.school.model"
 			targetProject="ClubApplicationSystem">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
@@ -28,13 +28,13 @@
 
 
 		<!-- 生成 mybatis （xml） -->
-		<sqlMapGenerator targetPackage="com.clubAppSys.modules.school.mybits"
+		<sqlMapGenerator targetPackage="com.fire.modules.school.mybits"
 			targetProject="ClubApplicationSystem">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 
 		<!-- 生成mapper （接口） -->
-		<javaClientGenerator targetPackage="com.clubAppSys.modules.school.mapper"
+		<javaClientGenerator targetPackage="com.fire.modules.school.mapper"
 			targetProject="ClubApplicationSystem" type="XMLMAPPER">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>

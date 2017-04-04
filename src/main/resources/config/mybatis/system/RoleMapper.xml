@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.clubAppSys.modules.system.mapper.RoleMapper">
-	<resultMap id="BaseResultMap" type="com.clubAppSys.modules.system.model.Role">
+<mapper namespace="com.fire.modules.system.mapper.RoleMapper">
+	<resultMap id="BaseResultMap" type="com.fire.modules.system.model.Role">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<id column="tag" property="tag" jdbcType="INTEGER" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
@@ -10,13 +10,13 @@
 		delete from role
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
-	<insert id="insert" parameterType="com.clubAppSys.modules.system.model.Role">
+	<insert id="insert" parameterType="com.fire.modules.system.model.Role">
 		insert into role (id,
 		name,tag)
 		values (#{id,jdbcType=INTEGER},
 		#{name,jdbcType=VARCHAR},#{tag,jdbcType=INTEGER})
 	</insert>
-	<update id="updateByPrimaryKey" parameterType="com.clubAppSys.modules.system.model.Role">
+	<update id="updateByPrimaryKey" parameterType="com.fire.modules.system.model.Role">
 		update role
 		set
 		name = #{name,jdbcType=VARCHAR}
