@@ -10,7 +10,11 @@ public class ChargeStandard {
 
 	private String status;
 
+	private String mode;
+
 	private Integer statusId;
+
+	private Integer modeId;
 
 	public Integer getId() {
 		return id;
@@ -44,10 +48,27 @@ public class ChargeStandard {
 		this.statusId = statusId;
 	}
 
+	public String getMode() {
+		return mode;
+	}
+
+	public void setMode(String mode) {
+		this.mode = mode;
+	}
+
+	public Integer getModeId() {
+		return modeId;
+	}
+
+	public void setModeId(Integer modeId) {
+		this.modeId = modeId;
+	}
+
 	@Override
 	public String toString() {
 		return "ChargeStandard [id=" + id + ", name=" + name + ", status="
-				+ status + ", statusId=" + statusId + "]";
+				+ status + ", mode=" + mode + ", statusId=" + statusId
+				+ ", modeId=" + modeId + "]";
 	}
 
 }

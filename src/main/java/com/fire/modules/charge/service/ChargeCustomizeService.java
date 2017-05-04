@@ -94,4 +94,13 @@ public class ChargeCustomizeService {
 		return false;
 	}
 
+	/**
+	 * 获取收费模式
+	 * 
+	 * @param standardId
+	 */
+	public int getChargeMode(int standardId) {
+		return 0;
+
+	}
 }

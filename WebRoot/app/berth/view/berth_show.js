@@ -139,6 +139,10 @@ Ext.define('MyApp.berth.view.berth_show', {
 				flex : 0.5,
 				align : 'center'
 			}, {
+				header : '序号',
+				dataIndex : 'statusId',
+				hidden : true,
+			}, {
 				header : '状态',
 				dataIndex : 'status',
 				flex : 1,

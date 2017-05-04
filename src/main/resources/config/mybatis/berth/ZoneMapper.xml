@@ -30,10 +30,10 @@
 
 	<select id="selectByPrimaryKey" resultType="Zone" parameterType="java.lang.Integer">
 		select zone.id, zone.name,zone.statusId, status.text
-		status,parking.name parkingName,charging_standard.name
+		status,parking.name parkingName,charge_standard.name
 		chargeStandardName, chargingStandardId
 		from
-		zone,status,parking,charging_standard
+		zone,status,parking,charge_standard
 		where
 		zone.id =
 		#{id,jdbcType=INTEGER}
@@ -42,20 +42,20 @@
 		and
 		zone.parkingId=paring.id
 		and
-		charging_standard.id=zone.chargingStandardId
+		charge_standard.id=zone.chargingStandardId
 	</select>
 
 	<select id="selectAll" resultType="Zone">
 		select zone.id, zone.name,parking.name parkingName,
 		status.text
-		status,parkingId,zone.statusId,chargingStandardId,charging_standard.name
+		status,parkingId,zone.statusId,chargingStandardId,charge_standard.name
 		chargeStandardName,chargingStandardId
 		from
-		zone,status,charging_standard,parking
+		zone,status,charge_standard,parking
 		where zone.statusId
 		= status.id
 		and
-		charging_standard.id=zone.chargingStandardId
+		charge_standard.id=zone.chargingStandardId
 		and zone.parkingId=parking.id
 	</select>
 

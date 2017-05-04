@@ -43,7 +43,19 @@ public class TimeUtils {
 	 * @return
 	 */
 	public static int getHoursBetweenDates(Date fromDate, Date toDate) {
-		int hours = (int) ((toDate.getTime() - fromDate.getTime()) / (60 * 60 * 1000)) % 24;
+		int hours = getIntervalHoursBetweenDates(fromDate, toDate) % 24;
+		return hours;
+	}
+
+	/**
+	 * 计算两个日期(不计算日期，只计算时间)间隔小时
+	 * 
+	 * @param fromDate
+	 * @param toDate
+	 * @return
+	 */
+	public static int getIntervalHoursBetweenDates(Date fromDate, Date toDate) {
+		int hours = (int) ((toDate.getTime() - fromDate.getTime()) / (60 * 60 * 1000));
 		return hours;
 	}
 

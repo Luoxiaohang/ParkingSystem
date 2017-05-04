@@ -9,5 +9,8 @@ Ext.define('MyApp.berth.model.BerthModel', {
 	}, {
 		name : 'remark',
 		type : 'string'
+	}, {
+		name : 'statusId',
+		type : 'int'
 	} ]
 });

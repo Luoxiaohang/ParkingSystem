@@ -5,6 +5,16 @@ public interface ConstantInfo {
 	String TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
 	/**
+	 * 梯度计费模式
+	 */
+	int CHARGE_MODE_GRADIENT = 1;
+
+	/**
+	 * 时间段计费模式
+	 */
+	int CHARGE_MODE_TIMING = 0;
+
+	/**
 	 * 系统当前用户
 	 */
 	String CURRENT_USER = "CURRENT_USER";

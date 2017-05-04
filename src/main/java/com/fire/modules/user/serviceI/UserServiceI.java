@@ -2,9 +2,11 @@ package com.fire.modules.user.serviceI;
 
 import java.util.List;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import com.fire.modules.user.model.Users;
 
-public interface UserServiceI {
+public interface UserServiceI extends UserDetailsService {
 
 	/**
 	 * 登录

@@ -5,6 +5,8 @@ import java.util.List;
 import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -152,5 +154,12 @@ public class UserServiceImpl implements UserServiceI {
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String arg0)
+			throws UsernameNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

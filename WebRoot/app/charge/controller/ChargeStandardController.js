@@ -3,10 +3,12 @@ Ext.define('MyApp.charge.controller.ChargeStandardController',
 			extend : 'Ext.app.Controller',
 			views : [ 'MyApp.charge.view.charge_standard_show',
 					'MyApp.charge.view.Charge_Customize_add',
+					'MyApp.charge.view.Charge_Standard_add',
 					'MyApp.charge.view.Charge_Customize_edit' ],
 
 			stores : [ 'MyApp.charge.store.ChargeStandardStore',
-					'MyApp.charge.store.ChargeCustomizeStore' ],
+					'MyApp.charge.store.ChargeCustomizeStore',
+					'MyApp.charge.store.ChargeModeStore' ],
 
 			refs : [ {
 				ref : 'standardList',
@@ -43,27 +45,15 @@ Ext.define('MyApp.charge.controller.ChargeStandardController',
 			},
 			onStandardAddBtnClick : function() {
 				var store = this.getStandardList().getStore();
-				Ext.MessageBox.prompt("提示", "请输入新的标准名称", function(btnId, text) {
-					if (btnId == "ok") {
-						Ext.Ajax.request({
-							url : SYSTEM_CONTEXTPATH
-									+ "/ChargeStandard/addStandard",
-							method : "Post",
-							params : {
-								name : text
-							},
-							success : function(response) {
-								var result = Ext.JSON
-										.decode(response.responseText)
-								if (result.success) {
-									Ext.Msg.alert('提示', "添加成功");
-									store.load();
-								} else {
-									Ext.Msg.alert('错误', result.msg);
-									store.load();
-								}
-							}
-						});
+				var view = Ext.widget('AddChargeStandard', {
+					SUCCESS : function() {
+						store.load();
+						view.close();
+						Ext.Msg.alert('提示', "添加成功");
+					},
+					FAIL : function() {
+						view.close();
+						Ext.Msg.alert('错误', result.msg);
 					}
 				});
 			},
@@ -146,7 +136,7 @@ Ext.define('MyApp.charge.controller.ChargeStandardController',
 				}
 			},
 			onCustomizeAddBtnClick : function(button) {
-				
+
 				var record = this.getStandardList().getSelectionModel()
 						.getSelection()[0];
 				if (typeof record == 'undefined') {

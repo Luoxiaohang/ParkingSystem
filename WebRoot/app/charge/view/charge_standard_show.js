@@ -38,19 +38,24 @@ Ext.define('MyApp.charge.view.charge_standard_show', {
 		columns : [ {
 			header : '序号',
 			dataIndex : 'id',
-			width : 80,
+			flex : 1,
 			align : 'center'
 		}, {
 			header : '标准名称',
 			dataIndex : 'name',
-			width : 200,
+			flex : 2,
 			align : 'center'
-		} , {
+		}, {
+			header : '收费模式',
+			dataIndex : 'mode',
+			flex : 2,
+			align : 'center'
+		}, {
 			header : '状态',
 			dataIndex : 'status',
-			width : 100,
+			flex : 1,
 			align : 'center'
-		}]
+		} ]
 	}, {
 		xtype : 'gridpanel',
 		title : '定制中心',

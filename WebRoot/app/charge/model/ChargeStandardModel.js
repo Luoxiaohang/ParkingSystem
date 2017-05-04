@@ -9,5 +9,8 @@ Ext.define('MyApp.charge.model.ChargeStandardModel', {
 	}, {
 		name : 'status',
 		type : 'string'
-	}]
+	}, {
+		name : 'mode',
+		type : 'string'
+	} ]
 });

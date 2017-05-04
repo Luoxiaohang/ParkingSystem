@@ -4,12 +4,12 @@
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from
-		charging_customize
+		charge_customize
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
 
 	<insert id="insert" parameterType="ChargeCustomize">
-		insert into charging_customize
+		insert into charge_customize
 		(startTime, endTime,chargingStandardId,commonCost,vipCost)
 		values
 		(#{startTime},
@@ -22,7 +22,7 @@
 
 	<update id="updateByPrimaryKey" parameterType="ChargeCustomize">
 		update
-		charging_customize
+		charge_customize
 		set startTime = #{startTime},
 		endTime =#{endTime},
 		commonCost =#{commonCost},
@@ -36,7 +36,7 @@
 		select id, startTime,
 		endTime,commonCost,vipCost,chargingStandardId standardId
 		from
-		charging_customize
+		charge_customize
 	</select>
 
 	<select id="getByStandardId" resultType="ChargeCustomize"
@@ -44,15 +44,15 @@
 		select id, startTime,
 		endTime,commonCost,vipCost,chargingStandardId standardId
 		from
-		charging_customize
+		charge_customize
 		where
-		charging_customize.chargingStandardId=#{standardId,jdbcType=INTEGER}
+		charge_customize.chargingStandardId=#{standardId,jdbcType=INTEGER}
 	</select>
 
 	<select id="selectAll" resultType="ChargeCustomize">
 		select id, startTime,
 		endTime,commonCost,vipCost,chargingStandardId standardId
 		from
-		charging_customize
+		charge_customize
 	</select>
 </mapper>

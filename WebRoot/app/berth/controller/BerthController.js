@@ -201,44 +201,36 @@ Ext.define('MyApp.berth.controller.BerthController', {
 	},
 	onBerthBookBtnClick : function(button) {
 		var record = this.getBerthList().getSelectionModel().getSelection()[0];
-		if (typeof record == 'undefined') {
-			Ext.MessageBox.show({
-				title : '提示',
-				msg : '请选择要预订的车位!',
-				buttons : Ext.MessageBox.OK,
-				icon : Ext.MessageBox.WARNING
+		// 如果车位处于未预订状态
+		console.log(record.data);
+		if (record.data.statusId == 5) {
+			var zoneRecord = this.getZoneList().getSelectionModel()
+					.getSelection()[0];
+			var zoneStore = this.getZoneList().getStore();
+			var berthStore = this.getBerthList().getStore();
+			view = Ext.widget('BookBerth', {
+				zoneRecord : zoneRecord,
+				berthRecord : record,
+				SUCCESS : function(result) {
+					view.close();
+					if (result.msg != '0.0') {
+						var tip = "继续支付" + result.msg + "元以完成预约？";
+						console.log(result.msg);
+						Ext.Msg.confirm('提示', tip, function(btnId) {
+							if (btnId == "yes") {
+								success = bookBerth(result.list[0]);
+							}
+						});
+					} else {
+						success = bookBerth(result.list[0]);
+					}
+				},
+				FAIL : function() {
+					view.close();
+				}
 			});
 		} else {
-			// 如果车位处于未预订状态
-			if (record.data.statusId == 5) {
-				var zoneRecord = this.getZoneList().getSelectionModel()
-						.getSelection()[0];
-				var zoneStore = this.getZoneList().getStore();
-				var berthStore = this.getBerthList().getStore();
-				view = Ext.widget('BookBerth', {
-					zoneRecord : zoneRecord,
-					berthRecord : record,
-					SUCCESS : function(result) {
-						view.close();
-						if (result.msg != '0.0') {
-							var tip = "继续支付" + result.msg + "元以完成预约？";
-							console.log(result.msg);
-							Ext.Msg.confirm('提示', tip, function(btnId) {
-								if (btnId == "yes") {
-									success = bookBerth(result.list[0]);
-								}
-							});
-						} else {
-							success = bookBerth(result.list[0]);
-						}
-					},
-					FAIL : function() {
-						view.close();
-					}
-				});
-			} else {
-				Ext.Msg.alert("抱歉","当前车位不能被预订");
-			}
+			Ext.Msg.alert("抱歉", "当前车位不能被预订");
 		}
 	},
 	onBerthEditBtnClick : function(button) {
