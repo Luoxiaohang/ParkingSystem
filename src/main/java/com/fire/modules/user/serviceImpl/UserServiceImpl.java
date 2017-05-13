@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fire.common.ConstantInfo;
 import com.fire.common.bean.Email;
 import com.fire.modules.user.mapper.UsersMapper;
 import com.fire.modules.user.model.Users;
@@ -34,22 +35,16 @@ public class UserServiceImpl implements UserServiceI {
 	}
 
 	@Override
-	public boolean resetPassword(String emailAddress) {
+	public void resetPassword(String emailAddress) {
 		Email email = new Email();
 		String password = StringUtils.getPassword();
 		email.setSubject("重置密码：");
 		email.setContent("恭喜您，您已经重置了烽火社团网申的密码，新的密码为" + password);
 		email.setAddress(emailAddress);
-		try {
-			// 修改数据库
-			getMapper().resetPassword(emailAddress,
-					StringUtils.string2MD5(password));
-			EmailUtils.sendEmail(email);
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			return false;
-		}
-		return true;
+		// 修改数据库
+		getMapper().resetPassword(emailAddress,
+				StringUtils.string2MD5(password));
+		ConstantInfo.EMAIL_HOLDER.add(email);
 	}
 
 	@Override

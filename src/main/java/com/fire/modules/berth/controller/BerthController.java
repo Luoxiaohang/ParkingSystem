@@ -60,6 +60,19 @@ public class BerthController {
 	}
 
 	@ResponseBody
+	@RequestMapping(value = "/getValidBookedRecords", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	private BaseDTO<BerthBook> getValidBookedRecords(HttpServletRequest request) {
+		BaseDTO<BerthBook> result = new BaseDTO<BerthBook>();
+		Users user = (Users) request.getSession().getAttribute(
+				ConstantInfo.CURRENT_USER);
+		List<BerthBook> list = berthService.getValidBookedRecords(user.getId(),
+				new Date());
+		result.setList(list);
+		result.setSuccess(true);
+		return result;
+	}
+
+	@ResponseBody
 	@RequestMapping(value = "/addBerth", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	private BaseDTO<Berth> addBerth(Berth berth) {
 		boolean success = berthService.addBerth(berth);
@@ -108,6 +121,22 @@ public class BerthController {
 				ConstantInfo.TIME_PATTERN);
 		berthBook.setToTime(toDate);
 		boolean success = berthService.bookBerth(berthBook);
+		BaseDTO<BerthBook> result = new BaseDTO<BerthBook>();
+		if (success) {
+			result.setSuccess(true);
+		} else {
+			result.setMsg("该车牌已经预订了车位");
+		}
+		return result;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/unBookBerth", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	private BaseDTO<BerthBook> unBookBerth(HttpServletRequest request,
+			BerthBook berthBook) {
+		Users user = (Users) request.getSession().getAttribute(
+				ConstantInfo.CURRENT_USER);
+		boolean success = berthService.unBookBerth(berthBook);
 		BaseDTO<BerthBook> result = new BaseDTO<BerthBook>();
 		if (success) {
 			result.setSuccess(true);

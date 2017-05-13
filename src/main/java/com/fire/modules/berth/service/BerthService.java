@@ -30,11 +30,16 @@ public class BerthService {
 	 */
 	public List<Berth> getBerths(int userId, Integer zoneId, Date fromDate,
 			Date toDate) {
-		List<Berth> berths = getByZoneId(zoneId);
+		List<Berth> berths = null;
+		if (zoneId == -1) {
+			berths = getMapper().selectAll();
+		} else {
+			berths = getByZoneId(zoneId);
+		}
 		for (Berth berth : berths) {
 			boolean booked = false;
 			List<BerthBook> reocords = getBookRecordsByBerthId(berth.getId());
-			
+
 			for (BerthBook record : reocords) {
 				// 判断当前时间是否在预订时间内,如果在,则判断该订单用户是否是当前用户，如果是则置为已预订，否则为不可预订
 				if (TimeUtils.isOverlapping(fromDate, toDate,
@@ -50,7 +55,7 @@ public class BerthService {
 					break;
 				}
 			}
-			//如果该车位未被预定，则判断车位的状态是否是正常状态，如果是则置为未预订
+			// 如果该车位未被预定，则判断车位的状态是否是正常状态，如果是则置为未预订
 			if (!booked) {
 				if (berth.getStatusId() == ConstantInfo.STATUS_NORMALL) {
 					berth.setStatusId(ConstantInfo.STATUS_NOT_BOOKED);
@@ -131,11 +136,33 @@ public class BerthService {
 	 * @return
 	 */
 	public boolean bookBerth(BerthBook book) {
-		int id = getMapper().addBookRecord(book);
-		if (id != -1) {
-			return true;
+		/**
+		 * 获取当前车牌在预订时间段内的停车记录
+		 */
+		BerthBook record = new BerthBook();
+		record.setCarId(book.getCarId());
+		record.setFromTime(book.getFromTime());
+		record.setToTime(book.getToTime());
+		List<BerthBook> records = getMapper().getBookedBerths(record);
+
+		if (records.size() != 0) {
+			return false;
 		}
-		return false;
+		/**
+		 * 获取当前车位在预订时间内的预订记录
+		 */
+		BerthBook record2 = new BerthBook();
+		record2.setBerthId(book.getBerthId());
+		record2.setFromTime(book.getFromTime());
+		record2.setToTime(book.getToTime());
+		records = getMapper().getBookedBerths(record2);
+
+		if (records.size() != 0) {
+			return false;
+		}
+
+		getMapper().addBookRecord(book);
+		return true;
 	}
 
 	public List<BerthBook> getBookedBerths(int userId) {
@@ -148,5 +175,23 @@ public class BerthService {
 		BerthBook record = new BerthBook();
 		record.setBerthId(berthId);
 		return getMapper().getBookedBerths(record);
+	}
+
+	/**
+	 * 
+	 * @param berthBook
+	 * @return
+	 */
+	public boolean unBookBerth(BerthBook berthBook) {
+		berthBook.setStatusId(ConstantInfo.STATUS_CANCLE);
+		getMapper().updateBookRecordByPrimaryKey(berthBook);
+		return true;
+	}
+
+	public List<BerthBook> getValidBookedRecords(Integer userId, Date date) {
+		BerthBook record = new BerthBook();
+		record.setUserId(userId);
+		record.setToTime(date);
+		return getMapper().getValidBookedRecords(record);
 	}
 }

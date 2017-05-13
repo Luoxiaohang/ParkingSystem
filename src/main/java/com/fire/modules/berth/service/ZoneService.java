@@ -122,20 +122,20 @@ public class ZoneService {
 				zone.setUseRate(100);
 				zone.setStatus("已满");
 			} else {
-				zone.setUseRate((float)used / berths.size()*100);
+				zone.setUseRate((float) used / berths.size() * 100);
 				zone.setStatus("未满");
 			}
 			// 设置价格
-			List<ChargeCustomize> customizes = ccs
-					.getCustomizesByStandardId(zone.getChargingStandardId());
-			for (ChargeCustomize customize : customizes) {
-				if (TimeUtils.isOverlapping(fromDate, toDate,
-						customize.getStartTime(), customize.getEndTime())) {
-					zone.setCost(customize.getCommonCost());
-					zone.setVipCost(customize.getVipCost());
-					break;
-				}
-			}
+			// List<ChargeCustomize> customizes = ccs
+			// .getCustomizesByStandardId(zone.getChargingStandardId());
+			// for (ChargeCustomize customize : customizes) {
+			// if (TimeUtils.isOverlapping(fromDate, toDate,
+			// customize.getStartTime(), customize.getEndTime())) {
+			// zone.setCost(customize.getCommonCost());
+			// zone.setVipCost(customize.getVipCost());
+			// break;
+			// }
+			// }
 		}
 		return zones;
 	}

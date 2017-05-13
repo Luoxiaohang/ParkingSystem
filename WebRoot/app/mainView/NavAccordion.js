@@ -34,7 +34,7 @@ function addTree(data) {
 	accrodionMain.removeAll("Ext.tree.Panel");
 	var tabMain = Ext.ComponentQuery.query('tabContent')[0];
 	Ext.getBody().unmask();
-	for (var i = 0; i < data.length; i++) {
+	for ( var i = 0; i < data.length; i++) {
 		accrodionMain.add(Ext.create("Ext.tree.Panel", {
 			id : "tree-" + i,
 			title : data[i].name,
@@ -50,21 +50,22 @@ function addTree(data) {
 					if (node.isLeaf()) { // 判断是否是根节点
 						var tabId = "tab-" + node.data.viewName;
 						var newTab = tabMain.getComponent(tabId);
-						var panel = Ext.create(node.data.viewName, {
-							id : tabId,
-							title : node.data.text,
-							closable : true,
-							sectionIndex : view.ownerCt.id.substring(5),
-							path : node.getPath()
-						}).show();
 						if (newTab) {
 							if (newTab.store) {
 								newTab.store.reload();
 							}
-							tabMain.remove(newTab);
+							tabMain.setActiveTab(newTab);
+						} else {
+							var panel = Ext.create(node.data.viewName, {
+								id : tabId,
+								title : node.data.text,
+								closable : true,
+								sectionIndex : view.ownerCt.id.substring(5),
+								path : node.getPath()
+							}).show();
+							tabMain.add(panel);
+							tabMain.setActiveTab(panel);
 						}
-						tabMain.add(panel);
-						tabMain.setActiveTab(panel);
 					}
 				}
 			}

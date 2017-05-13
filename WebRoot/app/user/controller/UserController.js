@@ -21,6 +21,9 @@ Ext
 					}, {
 						ref : 'sysUserListPanel',
 						selector : 'SysUserList'
+					}, {
+						ref : 'bookedBerthPanel',
+						selector : 'ShowBookedBerth'
 					} ],
 
 					init : function() {
@@ -42,6 +45,9 @@ Ext
 							},
 							'SysUserList' : {
 								itemclick : this.onSysUserListItemClick
+							},
+							'#btn_berth_unbook' : {
+								click : this.onUnBookBtnClick
 							}
 						});
 					},
@@ -67,7 +73,7 @@ Ext
 						var record = this.getSysUserListPanel()
 								.getSelectionModel().getSelection()[0];
 						if (typeof record == 'undefined') {
-							controller.noCheckTip();
+							controller.noCheckTip('请选择用户!');
 						} else {
 							var store = this.getSysUserListPanel().getStore();
 							Ext.Msg.confirm("提示", "您将设置该用户为系统管理员!", function(
@@ -89,7 +95,7 @@ Ext
 						var record = this.getSysUserListPanel()
 								.getSelectionModel().getSelection()[0];
 						if (typeof record == 'undefined') {
-							controller.noCheckTip();
+							controller.noCheckTip('请选择用户!');
 						} else {
 							var store = this.getSysUserListPanel().getStore();
 							Ext.Msg.confirm("提示", "您将取消该用户管理员身份！", function(
@@ -198,10 +204,10 @@ Ext
 						});
 					},
 
-					noCheckTip : function() {
+					noCheckTip : function(msg) {
 						Ext.MessageBox.show({
 							title : '提示',
-							msg : '请选择用户!',
+							msg : msg,
 							buttons : Ext.MessageBox.OK,
 							icon : Ext.MessageBox.WARNING
 						});
@@ -229,5 +235,34 @@ Ext
 								}
 							}
 						});
+					},
+					onUnBookBtnClick : function(btn, event) {
+						var record = this.getBookedBerthPanel()
+								.getSelectionModel().getSelection()[0];
+						if (typeof record == 'undefined') {
+							this.noCheckTip('请选择记录!');
+						} else {
+							Ext.Ajax
+									.request({
+										url : SYSTEM_CONTEXTPATH
+												+ "/Berth/unBookBerth",
+										method : "Post",
+										async : false,// 指定为同步方式
+										params : {
+											id : record.data.id
+										},
+										success : function(response) {
+											var result = Ext.JSON
+													.decode(response.responseText)
+											if (result.success) {
+												Ext.Msg.alert('提示', "设置成功");
+												return true;
+											} else {
+												Ext.Msg.alert('错误', result.msg);
+												return false;
+											}
+										}
+									});
+						}
 					}
 				});

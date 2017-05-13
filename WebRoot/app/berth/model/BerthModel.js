@@ -12,5 +12,29 @@ Ext.define('MyApp.berth.model.BerthModel', {
 	}, {
 		name : 'statusId',
 		type : 'int'
+	}, {
+		name : 'parkingId',
+		type : 'int'
+	}, {
+		name : 'parkingName',
+		type : 'string'
+	}, {
+		name : 'zoneId',
+		type : 'int'
+	}, {
+		name : 'zoneName',
+		type : 'string'
+	}, {
+		name : 'chargeModeId',
+		type : 'int'
+	}, {
+		name : 'chargeModeName',
+		type : 'string'
+	}, {
+		name : 'chargeStandardId',
+		type : 'int'
+	}, {
+		name : 'chargeStandardName',
+		type : 'string'
 	} ]
 });

@@ -33,7 +33,11 @@ public interface BerthMapper {
 	int addBookRecord(BerthBook book);
 
 	List<BerthBook> getBookedBerths(BerthBook book);
-	
+
 	List<BerthBook> getSaleDates();
+
+	void updateBookRecordByPrimaryKey(BerthBook berthBook);
+
+	List<BerthBook> getValidBookedRecords(BerthBook record);
 
 }

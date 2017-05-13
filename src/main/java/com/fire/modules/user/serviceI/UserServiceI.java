@@ -22,7 +22,7 @@ public interface UserServiceI extends UserDetailsService {
 	 * @param email
 	 * @return
 	 */
-	public boolean resetPassword(String email);
+	public void resetPassword(String email);
 
 	/**
 	 * 用户注册

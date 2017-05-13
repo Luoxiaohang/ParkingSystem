@@ -17,21 +17,24 @@ Ext.define('MyApp.berth.model.BerthBookModel', {
 		type : 'int'
 	}, {
 		name : 'bookTime',
-		type : 'date',  
-		mapping : 'bookTime',  
-		dateFormat : 'time'  
+		type : 'date',
+		mapping : 'bookTime',
+		dateFormat : 'time'
 	}, {
 		name : 'toTime',
-		type : 'date',  
-		mapping : 'toTime',  
-		dateFormat : 'time'  
+		type : 'date',
+		mapping : 'toTime',
+		dateFormat : 'time'
 	}, {
 		name : 'fromTime',
-		type : 'date',  
-		mapping : 'fromTime',  
-		dateFormat : 'time'  
+		type : 'date',
+		mapping : 'fromTime',
+		dateFormat : 'time'
 	}, {
 		name : 'cost',
+		type : 'float'
+	}, {
+		name : 'carId',
 		type : 'string'
-	}]
+	} ]
 });

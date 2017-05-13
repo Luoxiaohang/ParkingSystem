@@ -1,71 +1,46 @@
 package com.fire.utils;
 
-import java.util.Properties;
+import java.io.IOException;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
-import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.Message.RecipientType;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import org.apache.commons.httpclient.HttpException;
+import org.apache.log4j.Logger;
 
-import com.fire.common.bean.Email;
+import com.fire.common.ConstantInfo;
 
 public class EmailUtils {
-	public static void main(String[] args) throws MessagingException {
-		Email email = new Email();
-		email.setAddress("847149206@163.com");
-		email.setSubject("测试邮件");
-		email.setContent("邮件内容");
-		sendEmail(email);
-	}
 
-	public static void sendEmail(Email email) throws MessagingException {
-		// 创建Properties 类用于记录邮箱的一些属性
-		final Properties props = new Properties();
-		// 表示SMTP发送邮件，必须进行身份验证
-		props.put("mail.smtp.auth", "true");
-		// 此处填写SMTP服务器
-		props.put("mail.smtp.host", "smtp.qq.com");
-		// 端口号，QQ邮箱给出了两个端口，但是另一个我一直使用不了，所以就给出这一个587
-		props.put("mail.smtp.port", "587");
-		// 此处填写你的账号
-		props.put("mail.user", "847149206@qq.com");
-		// 此处的密码就是前面说的16位STMP口令
-		props.put("mail.password", "wrtmtksjahlmbehh");
+	public static void sendSMSMsg() throws HttpException, IOException,
+			InterruptedException {
+		
+		BlockingQueue<Runnable> queue = new LinkedBlockingQueue<Runnable>(20000);
+		ThreadPoolExecutor executors = new ThreadPoolExecutor(5, 6, 60000,
+				TimeUnit.SECONDS, queue);
+		while (true) {
+			// 要推送的用户总数
+			int count = ConstantInfo.EMAIL_HOLDER.size();
+			// 初始每个线程处理的用户数量
+			final int eveLength = 2000;
+			// 计算处理所有用户需要的线程数量
+			int eveBlocks = count / eveLength
+					+ (count % eveLength != 0 ? 1 : 0);
+			// 线程计数器
+			CountDownLatch doneSignal = new CountDownLatch(eveBlocks);
 
-		// 构建授权信息，用于进行SMTP进行身份验证
-		Authenticator authenticator = new Authenticator() {
-
-			protected PasswordAuthentication getPasswordAuthentication() {
-				// 用户名、密码
-				String userName = props.getProperty("mail.user");
-				String password = props.getProperty("mail.password");
-				return new PasswordAuthentication(userName, password);
+			// 开启线程处理
+			for (int page = 0; page < eveBlocks; page++) { /* blocks太大可以再细分重新调度 */
+				EmailSendThread ms = new EmailSendThread(page, eveLength,
+						doneSignal);
+				executors.execute(ms);
 			}
-		};
-		// 使用环境属性和授权信息，创建邮件会话
-		Session mailSession = Session.getInstance(props, authenticator);
-		// 创建邮件消息
-		Message message = new MimeMessage(mailSession);
-		// 设置发件人
-		InternetAddress form = new InternetAddress(
-				props.getProperty("mail.user"));
-		message.setFrom(form);
+			doneSignal.await();// 等待所有计数器线程执行完
 
-		// 设置收件人的邮箱
-		InternetAddress to = new InternetAddress(email.getAddress());
-		message.setRecipient(RecipientType.TO, to);
-
-		// 设置邮件标题
-		message.setSubject(email.getSubject());
-		// 设置邮件的内容体
-		message.setContent(email.getContent(), "text/html;charset=UTF-8");
-
-		// 最后当然就是发送邮件啦
-		Transport.send(message);
+			ConstantInfo.SMS_HOLDER.clear();
+			Thread.sleep(60 * 1000);
+		}
 	}
 }

@@ -117,7 +117,7 @@ Ext.define('MyApp.user.view.Secure_show', {
 			}, {
 				text : '描述',
 				dataIndex : 'description',
-				flex : 3
+				flex : 5
 			} ]
 		} ];
 		this.callParent(arguments);

@@ -12,10 +12,19 @@
 
 	<sql id="where_berth_book_records">
 		<if test="userId!=null ">
-			and berth_book_records.userId=#{userId}
+			and records.userId=#{userId}
 		</if>
 		<if test="berthId!=null ">
-			and berth_book_records.berthId=#{berthId}
+			and records.berthId=#{berthId}
+		</if>
+		<if test="carId!=null ">
+			and records.carId=#{carId}
+		</if>
+		<if test="fromTime!=null ">
+			and records.fromTime > #{fromTime}
+		</if>
+		<if test="toTime!=null ">
+			and records.toTime &lt;  #{toTime}
 		</if>
 	</sql>
 
@@ -23,6 +32,13 @@
 		<if test="zoneId!=null">zoneId=#{zoneId},</if>
 		<if test="statusId!=null">statusId=#{statusId},</if>
 		<if test="remark!=null">remark=#{remark},</if>
+	</sql>
+	<sql id="set_berth_book">
+		<if test="fromTime!=null">fromTime=#{fromTime},</if>
+		<if test="toTime!=null">toTime=#{toTime},</if>
+		<if test="status!=null">status=#{status},</if>
+		<if test="cost!=null">cost=#{cost},</if>
+		<if test="carId!=null">carId=#{carId},</if>
 	</sql>
 
 
@@ -38,7 +54,7 @@
 		(zoneId,statusId,remark)
 		values
 		(#{zoneId,jdbcType=INTEGER},
-		#{statusId,jdbcType=INTEGER}
+		#{statusId,jdbcType=INTEGER},
 		#{remark,jdbcType=VARCHAR}
 		)
 	</insert>
@@ -46,12 +62,13 @@
 	<insert id="addBookRecord" parameterType="BerthBook">
 		insert into
 		berth_book_records
-		(berthId,userId,parkingId,zoneId,bookTime,fromTime,toTime,cost,statusId,standardId)
+		(berthId,userId,parkingId,zoneId,carId,bookTime,fromTime,toTime,cost,statusId,standardId)
 		values
 		(#{berthId,jdbcType=INTEGER},
 		#{userId,jdbcType=INTEGER},
 		#{parkingId,jdbcType=INTEGER},
 		#{zoneId,jdbcType=INTEGER},
+		#{carId,jdbcType=VARCHAR},
 		#{bookTime,jdbcType=TIMESTAMP},
 		#{fromTime,jdbcType=TIMESTAMP},
 		#{toTime,jdbcType=TIMESTAMP},
@@ -60,6 +77,15 @@
 		#{standardId,jdbcType=INTEGER}
 		)
 	</insert>
+
+	<update id="updateBookRecordByPrimaryKey" parameterType="BerthBook">
+		update
+		berth_book_records
+		<set>
+			<include refid="set_berth_book"></include>
+		</set>
+		where id=#{id}
+	</update>
 
 	<update id="updateByPrimaryKey" parameterType="Berth">
 		update BERTH
@@ -79,32 +105,74 @@
 	</select>
 
 	<select id="getByZoneId" resultType="Berth" parameterType="java.lang.Integer">
-		select berth.id, zoneId,statusId,status.text status
-		from berth,status
+		select berth.id,
+		berth.zoneId,berth.statusId,status.text
+		status,parking.id parkingId,parking.`name` parkingName,zone.id
+		zoneId,zone.`name` zoneName,
+		charge_standard.name
+		chargeStandardName,charge_mode.name chargeModeName,charge_mode.id
+		chargeModeId,charge_standard.id chargeStandardId
+		from
+		berth,status,parking,zone,charge_mode,charge_standard
 		where
-		berth.zoneId=#{zoneId,jdbcType=INTEGER}
-		and
 		berth.statusId=status.id
+		and berth.zoneId=zone.id
+		and
+		zone.parkingId=parking.id
+		and
+		zone.chargingStandardId=charge_standard.id
+		and
+		charge_standard.modeId=charge_mode.id
+		and
+		berth.zoneId=#{zoneId,jdbcType=INTEGER}
 	</select>
 
 	<select id="getBookedBerths" resultType="BerthBook"
 		parameterType="BerthBook">
 		select
-		berth_book_records.id,berth_book_records.userId,berth_book_records.fromTime,berth_book_records.toTime,berth_book_records.berthId,berth_book_records.bookTime,berth_book_records.cost,
-		berth_book_records.zoneId,berth_book_records.statusId,status.text
-		status,parking.name parkingName,zone.name zoneName
+		records.id,records.carId,records.userId,records.fromTime,records.toTime,records.berthId,records.bookTime,records.cost,
+		records.zoneId,records.statusId,status.text
+		status,parking.name
+		parkingName,zone.name zoneName
 		from
-		berth_book_records,status,parking,zone
+		berth_book_records
+		records,status,parking,zone
 		<where>
 			<include refid="where_berth_book_records"></include>
 		</where>
 		and
-		berth_book_records.statusId=status.id
+		records.statusId=status.id
 		and
-		berth_book_records.parkingId=parking.id
+		records.parkingId=parking.id
 		and
-		berth_book_records.zoneId=zone.id
-		ORDER BY berth_book_records.fromTime
+		records.zoneId=zone.id
+		ORDER BY
+		records.fromTime
+	</select>
+
+	<select id="getValidBookedRecords" resultType="BerthBook"
+		parameterType="BerthBook">
+		select
+		records.id,records.userId,records.carId,records.fromTime,records.toTime,records.berthId,records.bookTime,records.cost,
+		records.zoneId,records.statusId,status.text
+		status,parking.name
+		parkingName,zone.name zoneName
+		from
+		berth_book_records
+		records,status,parking,zone
+		<where>
+			<include refid="where_berth_book_records"></include>
+		</where>
+		and
+		records.statusId=status.id
+		and
+		records.parkingId=parking.id
+		and
+		records.zoneId=zone.id
+		and
+		records.toTime>#{toTime}
+		ORDER BY
+		records.fromTime
 	</select>
 
 	<select id="getSaleDates" resultType="BerthBook">
@@ -116,9 +184,26 @@
 
 	<select id="selectAll" resultType="Berth">
 		select berth.id,
-		zoneId,statusId,status.text status
-		from berth,status
+		berth.zoneId,berth.statusId,status.text
+		status,parking.id
+		parkingId,parking.`name` parkingName,zone.id
+		zoneId,zone.`name`
+		zoneName,
+		charge_standard.name
+		chargeStandardName,charge_mode.name
+		chargeModeName,charge_mode.id
+		chargeModeId,charge_standard.id
+		chargeStandardId
+		from
+		berth,status,parking,zone,charge_mode,charge_standard
 		where
 		berth.statusId=status.id
+		and berth.zoneId=zone.id
+		and
+		zone.parkingId=parking.id
+		and
+		zone.chargingStandardId=charge_standard.id
+		and
+		charge_standard.modeId=charge_mode.id
 	</select>
 </mapper>

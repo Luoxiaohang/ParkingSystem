@@ -29,34 +29,35 @@
 	</update>
 
 	<select id="selectByPrimaryKey" resultType="Zone" parameterType="java.lang.Integer">
-		select zone.id, zone.name,zone.statusId, status.text
-		status,parking.name parkingName,charge_standard.name
-		chargeStandardName, chargingStandardId
-		from
-		zone,status,parking,charge_standard
-		where
-		zone.id =
-		#{id,jdbcType=INTEGER}
-		and
-		zone.statusId=status.id
-		and
-		zone.parkingId=paring.id
-		and
-		charge_standard.id=zone.chargingStandardId
-	</select>
-
-	<select id="selectAll" resultType="Zone">
 		select zone.id, zone.name,parking.name parkingName,
 		status.text
-		status,parkingId,zone.statusId,chargingStandardId,charge_standard.name
-		chargeStandardName,chargingStandardId
+		status,parkingId,zone.statusId,charge_standard.name
+		chargeStandardName,chargingStandardId,charge_mode.id chargeModeId,charge_mode.name chargeModeName
 		from
-		zone,status,charge_standard,parking
+		zone,status,charge_standard,parking,charge_mode
 		where zone.statusId
 		= status.id
 		and
 		charge_standard.id=zone.chargingStandardId
 		and zone.parkingId=parking.id
+		and charge_standard.modeId=charge_mode.id
+		and
+		zone.id =#{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectAll" resultType="Zone">
+		select zone.id, zone.name,parking.name parkingName,
+		status.text
+		status,parkingId,zone.statusId,charge_standard.name
+		chargeStandardName,chargingStandardId,charge_mode.id chargeModeId,charge_mode.name chargeModeName
+		from
+		zone,status,charge_standard,parking,charge_mode
+		where zone.statusId
+		= status.id
+		and
+		charge_standard.id=zone.chargingStandardId
+		and zone.parkingId=parking.id
+		and charge_standard.modeId=charge_mode.id
 	</select>
 
 	<select id="checkZone" resultType="Zone">

@@ -14,6 +14,8 @@ public class Zone implements Serializable {
 	private Float vipCost;
 	private Integer chargingStandardId;
 	private String chargeStandardName;
+	private Integer chargingModeId;
+	private String chargeModeName;
 	private String parkingName;
 	private String status;
 
@@ -107,14 +109,31 @@ public class Zone implements Serializable {
 		this.useRate = useRate;
 	}
 
+	public Integer getChargingModeId() {
+		return chargingModeId;
+	}
+
+	public void setChargingModeId(Integer chargingModeId) {
+		this.chargingModeId = chargingModeId;
+	}
+
+	public String getChargeModeName() {
+		return chargeModeName;
+	}
+
+	public void setChargeModeName(String chargeModeName) {
+		this.chargeModeName = chargeModeName;
+	}
+
 	@Override
 	public String toString() {
 		return "Zone [id=" + id + ", name=" + name + ", parkingId=" + parkingId
 				+ ", statusId=" + statusId + ", cost=" + cost + ", vipCost="
 				+ vipCost + ", chargingStandardId=" + chargingStandardId
 				+ ", chargeStandardName=" + chargeStandardName
-				+ ", parkingName=" + parkingName + ", status=" + status
-				+ ", useRate=" + useRate + "]";
+				+ ", chargingModeId=" + chargingModeId + ", chargeModeName="
+				+ chargeModeName + ", parkingName=" + parkingName + ", status="
+				+ status + ", useRate=" + useRate + "]";
 	}
 
 }

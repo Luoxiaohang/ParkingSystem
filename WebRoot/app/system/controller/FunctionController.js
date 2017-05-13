@@ -204,7 +204,7 @@ Ext.define('MyApp.system.controller.FunctionController',
 					});
 				} else {
 					var store = this.getModuleFunctionList().getStore();
-					Ext.Msg.confirm('提示', "确定要删除当前角色的功能", function(btnId) {
+					Ext.Msg.confirm('提示', "确定要删除当前功能?", function(btnId) {
 						if (btnId == "yes") {
 							Ext.Ajax.request({
 								url : SYSTEM_CONTEXTPATH

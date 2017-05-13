@@ -10,7 +10,8 @@ Ext.define('MyApp.Application', {
 			'MyApp.berth.controller.BerthController',
 			'MyApp.user.controller.UserController',
 			'MyApp.monitor.controller.MonitorController',
-			'MyApp.chart.controller.BarController' ],
+			'MyApp.chart.controller.BarController',
+			'MyApp.record.controller.RecordController', ],
 	launch : function() {
 
 	}

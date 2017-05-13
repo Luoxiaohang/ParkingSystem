@@ -191,11 +191,9 @@ public class UserController {
 		// 判断邮箱是否注册
 		boolean exist = userService.checkEmail(Email);
 		if (exist) {
-			boolean success = userService.resetPassword(Email);
-			result.setSuccess(success);
-			if (!success) {
-				result.setMsg("处理错误");
-			}
+			userService.resetPassword(Email);
+			result.setSuccess(true);
+			result.setMsg("登录密码已发送至您的邮箱，请注意查收");
 		} else {
 			result.setMsg("邮箱未注册");
 		}

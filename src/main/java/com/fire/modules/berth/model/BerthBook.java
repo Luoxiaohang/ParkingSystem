@@ -11,6 +11,7 @@ public class BerthBook {
 	private Integer zoneId;
 	private String parkingName;
 	private String zoneName;
+	private String carId;
 	private Integer berthId;
 	private Integer statusId;
 	private Integer userId;
@@ -160,16 +161,25 @@ public class BerthBook {
 		this.fromTimeStr = fromTimeStr;
 	}
 
+	public String getCarId() {
+		return carId;
+	}
+
+	public void setCarId(String carId) {
+		this.carId = carId;
+	}
+
 	@Override
 	public String toString() {
 		return "BerthBook [id=" + id + ", parkingId=" + parkingId + ", zoneId="
 				+ zoneId + ", parkingName=" + parkingName + ", zoneName="
-				+ zoneName + ", berthId=" + berthId + ", statusId=" + statusId
-				+ ", userId=" + userId + ", fromTime=" + fromTime + ", toTime="
-				+ toTime + ", bookTime=" + bookTime + ", bookTimeStr="
-				+ bookTimeStr + ", toTimeStr=" + toTimeStr + ", fromTimeStr="
-				+ fromTimeStr + ", status=" + status + ", standardId="
-				+ standardId + ", cost=" + cost + "]";
+				+ zoneName + ", carId=" + carId + ", berthId=" + berthId
+				+ ", statusId=" + statusId + ", userId=" + userId
+				+ ", fromTime=" + fromTime + ", toTime=" + toTime
+				+ ", bookTime=" + bookTime + ", bookTimeStr=" + bookTimeStr
+				+ ", toTimeStr=" + toTimeStr + ", fromTimeStr=" + fromTimeStr
+				+ ", status=" + status + ", standardId=" + standardId
+				+ ", cost=" + cost + "]";
 	}
 
 }

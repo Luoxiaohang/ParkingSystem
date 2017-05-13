@@ -2,6 +2,7 @@ Ext.define('MyApp.chart.view.BerthRateChart',
 		{
 			extend : 'Ext.chart.Chart',
 			alias : 'widget.BerthRateChart',
+			id : 'BerthRateChart',
 			store : "MyApp.berth.store.ZoneStore",
 			animate : true,
 			style : 'background:#fff',

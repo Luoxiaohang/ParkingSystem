@@ -42,7 +42,7 @@ public class SaleService {
 		for (int i = 0; i < 12; i++) {
 			Sale sale = new Sale();
 			sale.setMonth(i + 1);
-			sale.setData(data[i]);
+			sale.setData(data[i]/1000);
 			result.add(sale);
 		}
 		return result;

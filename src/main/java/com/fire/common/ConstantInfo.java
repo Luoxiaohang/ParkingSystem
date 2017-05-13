@@ -1,5 +1,10 @@
 package com.fire.common;
 
+import java.util.Vector;
+
+import com.fire.common.bean.Email;
+import com.fire.common.bean.SMS;
+
 public interface ConstantInfo {
 
 	String TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
@@ -30,14 +35,9 @@ public interface ConstantInfo {
 	int SYSTEM_ROLE_SYSTEM_MANAGER = 1;
 
 	/**
-	 * 社团管理员
+	 * 管理员
 	 */
 	int SYSTEM_ROLE_CLUB_MANAGER = 2;
-
-	/**
-	 * 社团成员
-	 */
-	int SYSTEM_ROLE_CLUB_MEMBER = 3;
 
 	/**
 	 * 普通用户
@@ -91,4 +91,13 @@ public interface ConstantInfo {
 	 */
 	Integer STATUS_PAYED = 8;
 	String STR_STATUS_PAYED = "已支付";
+
+	/**
+	 * 已取消
+	 */
+	Integer STATUS_CANCLE = 8;
+	String STR_STATUS_CANCLE = "已取消";
+
+	Vector<SMS> SMS_HOLDER = new Vector<>();
+	Vector<Email> EMAIL_HOLDER = new Vector<>();
 }

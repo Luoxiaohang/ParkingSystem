@@ -5,8 +5,8 @@ Ext.define("MyApp.berth.store.ZoneStore", {
 	proxy : {
 		type : 'ajax',
 		extraParams : {
-			fromTime : Ext.Date.format(new Date(), "Y-m-d H:i:s"),
-			toTime : Ext.Date.format(new Date(), "Y-m-d H:i:s"),
+			fromTime : null,
+			toTime : null,
 		},
 		url : SYSTEM_CONTEXTPATH + '/Zone/getZoneList',
 		reader : {
@@ -20,5 +20,20 @@ Ext.define("MyApp.berth.store.ZoneStore", {
 	sorters : [ {
 		property : 'id',
 		direction : 'ASC'
-	} ]
+	} ],
+	listeners : {
+		beforeload : function(store, operation, eOpts) {
+			var fromTime = null;
+			var toTime = null;
+			if (typeof Ext.getCmp("field_query_from_time") == 'undefined') {
+				fromTime = Ext.Date.format(new Date(), "Y-m-d H:i:s");
+				toTime = Ext.Date.format(new Date(), "Y-m-d H:i:s");
+			} else {
+				fromTime = Ext.getCmp("field_query_from_time").getRawValue();
+				toTime = Ext.getCmp("field_query_to_time").getRawValue();
+			}
+			store.proxy.extraParams.fromTime = fromTime;
+			store.proxy.extraParams.toTime = toTime;
+		}
+	}
 });

@@ -16,6 +16,9 @@ Ext.define('MyApp.berth.model.ZoneModel', {
 		name : 'chargingStandardId',
 		type : 'int'
 	}, {
+		name : 'chargingModeId',
+		type : 'int'
+	}, {
 		name : 'parkingId',
 		type : 'string'
 	}, {
@@ -23,6 +26,9 @@ Ext.define('MyApp.berth.model.ZoneModel', {
 		type : 'string'
 	}, {
 		name : 'chargeStandardName',
+		type : 'string'
+	}, {
+		name : 'chargeModeName',
 		type : 'string'
 	}, {
 		name : 'cost',

@@ -2,6 +2,7 @@ Ext.define('MyApp.chart.view.SaleChart',
 		{
 			extend : 'Ext.chart.Chart',
 			alias : 'widget.SaleChart',
+			id : 'SaleChart',
 			store : "MyApp.chart.store.SaleStore",
 			animate : true,
 			style : 'background:#fff',
