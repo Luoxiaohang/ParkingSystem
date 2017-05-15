@@ -23,7 +23,7 @@ public class RoleController {
 
 	@ResponseBody
 	@RequestMapping(value = "/getRoleList", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	private BaseDTO<Role> addSysFunction(Function fun) {
+	private BaseDTO<Role> getRoleList(Function fun) {
 		BaseDTO<Role> result = new BaseDTO<>();
 		List<Role> roles = roleService.getAllRoles();
 		if (roles != null) {
@@ -32,21 +32,6 @@ public class RoleController {
 		} else {
 			result.setSuccess(false);
 			result.setMsg("获取角色列表失败");
-		}
-		return result;
-	}
-
-	@ResponseBody
-	@RequestMapping(value = "/getClubRoleList", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	private BaseDTO<Role> getClubRoleList() {
-		BaseDTO<Role> result = new BaseDTO<>();
-		List<Role> roles = roleService.getAllClubRoles();
-		if (roles != null) {
-			result.setSuccess(true);
-			result.setList(roles);
-		} else {
-			result.setSuccess(false);
-			result.setMsg("获取社團角色列表失败");
 		}
 		return result;
 	}

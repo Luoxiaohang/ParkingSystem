@@ -35,7 +35,7 @@ Ext.define('MyApp.chart.view.SaleChart',
 					height : 28,
 					renderer : function(storeItem, item) {
 						this.setTitle(storeItem.get('month') + ': '
-								+ storeItem.get('data') + ' 千元');
+								+ storeItem.get('data') + ' 元');
 					}
 				},
 				label : {

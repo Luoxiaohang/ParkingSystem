@@ -1,7 +1,7 @@
 setlocal
 
-echo Packing
-mvn package -DskipTests=true
+echo starting
+mvn jetty:run -DskipTests=true
 
 
 endlocal

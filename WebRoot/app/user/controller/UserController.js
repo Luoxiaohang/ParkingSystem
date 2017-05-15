@@ -255,7 +255,7 @@ Ext
 											var result = Ext.JSON
 													.decode(response.responseText)
 											if (result.success) {
-												Ext.Msg.alert('提示', "设置成功");
+												Ext.Msg.alert('提示', "取消成功");
 												return true;
 											} else {
 												Ext.Msg.alert('错误', result.msg);

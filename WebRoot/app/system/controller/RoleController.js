@@ -5,7 +5,6 @@ Ext.define('MyApp.system.controller.RoleController', {
 			'MyApp.system.view.Role_Function_add' ],
 
 	stores : [ 'MyApp.system.store.RoleStore',
-			"MyApp.system.store.ClubRoleStore",
 			'MyApp.system.store.RoleFunctionStore' ],
 
 	refs : [ {
