@@ -1,6 +1,7 @@
 Ext.define('MyApp.berth.view.berth_show', {
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.ShowBerthPanel',
+	id : 'ShowBerthPanel',
 	autoShow : true,
 	margin : '3 3 3 0',
 	store : "MyApp.berth.store.BerthStore",

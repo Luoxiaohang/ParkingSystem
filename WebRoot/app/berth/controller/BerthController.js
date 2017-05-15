@@ -270,6 +270,8 @@ Ext.define('MyApp.berth.controller.BerthController',
 				store.load();
 			},
 			onQueryBtnClick : function() {
+				var store=this.getBerthPanel().getStore();
+				store.getProxy().extraParams.zoneId = -1;
 				this.getBerthPanel().getStore().load();
 			}
 		});

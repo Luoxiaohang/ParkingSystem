@@ -21,7 +21,7 @@ public interface ModulesMapper {
 	 * @param roleId
 	 * @return
 	 */
-	public List<Modules> getModulesByTypeId(int roleId);
+	List<Modules> getModulesByTypeId(int roleId);
 
 	/**
 	 * 根据名称获取模块

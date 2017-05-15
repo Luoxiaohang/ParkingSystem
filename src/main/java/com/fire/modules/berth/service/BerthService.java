@@ -76,15 +76,6 @@ public class BerthService {
 		return getMapper().getByZoneId(zoneId);
 	}
 
-	/**
-	 * 获取功能列表
-	 * 
-	 * @return
-	 */
-	public List<Berth> getModulesList() {
-		List<Berth> functions = getMapper().selectAll();
-		return functions;
-	}
 
 	/**
 	 * 添加收费时间段

@@ -28,7 +28,7 @@ public class FunctionController {
 
 	@ResponseBody
 	@RequestMapping(value = "/getModuleFunctionList", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	private List<Function> getChildFunctionList(HttpServletRequest request,
+	private List<Function> getModuleFunctionList(HttpServletRequest request,
 			int moduleId, boolean root, boolean getAll) {
 		HashSet<Function> functions = new HashSet<>();
 		if (getAll) {

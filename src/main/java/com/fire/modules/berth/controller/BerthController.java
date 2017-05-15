@@ -29,6 +29,9 @@ public class BerthController {
 
 	@Autowired(required = false)
 	private BerthService berthService;
+	
+	@Autowired(required = false)
+	private ChargeService cs;
 
 	@ResponseBody
 	@RequestMapping(value = "/getBerth", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -148,7 +151,6 @@ public class BerthController {
 	@RequestMapping(value = "/getCost", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	private BaseDTO<BerthBook> getCost(BerthBook berthBook) {
 		BaseDTO<BerthBook> result = new BaseDTO<BerthBook>();
-		ChargeService cs = SpringContextHolder.getBean("ChargeService");
 		Date fromDate = TimeUtils.parseDate(berthBook.getFromTimeStr(),
 				ConstantInfo.TIME_PATTERN);
 		Date toDate = TimeUtils.parseDate(berthBook.getToTimeStr(),

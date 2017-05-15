@@ -95,7 +95,7 @@ public interface ConstantInfo {
 	/**
 	 * 已取消
 	 */
-	Integer STATUS_CANCLE = 8;
+	Integer STATUS_CANCLE = 9;
 	String STR_STATUS_CANCLE = "已取消";
 
 	Vector<SMS> SMS_HOLDER = new Vector<>();

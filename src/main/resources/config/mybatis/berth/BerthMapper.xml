@@ -2,46 +2,53 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fire.modules.berth.mapper.BerthMapper">
 	<sql id="where_berth">
-		<if test="zoneId!=null ">
-			and berth.zoneId=#{zoneId}
-		</if>
-		<if test="statusId!=null ">
-			and berth.statusId=#{statusId}
-		</if>
+		<trim suffixOverrides="AND">
+			<if test="zoneId!=null ">
+				and berth.zoneId=#{zoneId}
+			</if>
+			<if test="statusId!=null ">
+				and berth.statusId=#{statusId}
+			</if>
+		</trim>
 	</sql>
 
 	<sql id="where_berth_book_records">
-		<if test="userId!=null ">
-			and records.userId=#{userId}
-		</if>
-		<if test="berthId!=null ">
-			and records.berthId=#{berthId}
-		</if>
-		<if test="carId!=null ">
-			and records.carId=#{carId}
-		</if>
-		<if test="fromTime!=null ">
-			and records.fromTime > #{fromTime}
-		</if>
-		<if test="toTime!=null ">
-			and records.toTime &lt;  #{toTime}
-		</if>
+		<trim suffixOverrides="AND">
+			<if test="userId!=null ">
+				and records.userId=#{userId}
+			</if>
+			<if test="berthId!=null ">
+				and records.berthId=#{berthId}
+			</if>
+			<if test="carId!=null ">
+				and records.carId=#{carId}
+			</if>
+			<if test="fromTime!=null ">
+				and records.fromTime > #{fromTime}
+			</if>
+			<if test="toTime!=null ">
+				and records.toTime &gt; #{toTime}
+			</if>
+		</trim>
 	</sql>
 
 	<sql id="set_berth">
-		<if test="zoneId!=null">zoneId=#{zoneId},</if>
-		<if test="statusId!=null">statusId=#{statusId},</if>
-		<if test="remark!=null">remark=#{remark},</if>
+		<trim suffixOverrides=",">
+			<if test="zoneId!=null">zoneId=#{zoneId},</if>
+			<if test="statusId!=null">statusId=#{statusId},</if>
+			<if test="remark!=null">remark=#{remark},</if>
+		</trim>
 	</sql>
 	<sql id="set_berth_book">
-		<if test="fromTime!=null">fromTime=#{fromTime},</if>
-		<if test="toTime!=null">toTime=#{toTime},</if>
-		<if test="status!=null">status=#{status},</if>
-		<if test="cost!=null">cost=#{cost},</if>
-		<if test="carId!=null">carId=#{carId},</if>
+		<trim suffixOverrides=",">
+			<if test="fromTime!=null">fromTime=#{fromTime},</if>
+			<if test="toTime!=null">toTime=#{toTime},</if>
+			<if test="status!=null">status=#{status},</if>
+			<if test="cost!=null">cost=#{cost},</if>
+			<if test="carId!=null">carId=#{carId},</if>
+			<if test="statusId!=null">statusId=#{statusId},</if>
+		</trim>
 	</sql>
-
-
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from
@@ -169,8 +176,6 @@
 		records.parkingId=parking.id
 		and
 		records.zoneId=zone.id
-		and
-		records.toTime>#{toTime}
 		ORDER BY
 		records.fromTime
 	</select>

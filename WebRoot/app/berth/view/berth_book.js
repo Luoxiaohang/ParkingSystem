@@ -33,7 +33,7 @@ Ext.define('MyApp.berth.view.berth_book', {
 			fieldLabel : '结束时间',
 			name : 'toTimeStr',
 			format : "Y-m-d H:i:s",
-			maxValue : Ext.getCmp("berth_field_query_to_time").getRawValue(),
+			minValue : Ext.getCmp("berth_field_query_to_time").getRawValue(),
 			alowBlank : false
 		});
 		this.items = [ {
@@ -59,7 +59,7 @@ Ext.define('MyApp.berth.view.berth_book', {
 			}, {
 				hidden : true,
 				name : 'standardId',
-				value : this.berthRecord.data.chargingStandardId
+				value : this.berthRecord.data.chargeStandardId
 			}, {
 				xtype : 'displayfield',
 				fieldLabel : '停车场名称',
@@ -100,16 +100,24 @@ Ext.define('MyApp.berth.view.berth_book', {
 														success : function(data, textStatus) {
 															var result = Ext.JSON.decode(data);
 															if (result.success) {
-																 Ext.getCmp("zone_panel").getStore().load();
+																if(Ext.getCmp("manage_zone_panel")){
+																	Ext.getCmp("manage_zone_panel").getStore().load();
+																}
+																 if(Ext.getCmp("manage_berth_panel")){
+																	 var berthStore = Ext.getCmp("manage_berth_panel").getStore();
+																	 berthStore.getProxy().extraParams.zoneId = Ext.getCmp("BookBerth").zoneRecord.data.id;
+																	 berthStore.load();
+																 }
 																 Ext.getCmp("SaleChart").getStore().load();
 																 Ext.getCmp("BerthRateChart").getStore().load();
 																 var view = Ext.getCmp("ShowBookedBerthPanel");
 																 if(typeof view != 'undefined'){
 																	 view.getStore().load();
 																 }
-																 var berthStore = Ext.getCmp("berth_panel").getStore();
-																 berthStore.getProxy().extraParams.zoneId = Ext.getCmp("BookBerth").zoneRecord.data.id;
-																 berthStore.load();
+																 var ShowBerthPanel = Ext.getCmp("ShowBerthPanel");
+																 if(ShowBerthPanel){
+																	 ShowBerthPanel.getStore().load();
+																 }
 																 Ext.getCmp("BookBerth").SUCCESS();
 															} else {
 																Ext.Msg.alert('预订失败', result.msg);
