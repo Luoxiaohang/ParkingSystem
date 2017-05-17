@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fire.modules.monitor.mapper.MonitorMapper">
+
+	<resultMap id="BaseResultMap" type="Monitor">
+		<id column="ID" property="id" jdbcType="INTEGER" />
+		<result column="PARKINGID" property="parkingId" jdbcType="INTEGER" />
+		<result column="PARKINGNAME" property="parkingName" jdbcType="VARCHAR" />
+		<result column="ZONEID" property="zoneId" jdbcType="INTEGER" />
+		<result column="ZONENAME" property="zoneName" jdbcType="VARCHAR" />
+		<result column="STATUSID" property="statusId" jdbcType="INTEGER" />
+		<result column="STATUS" property="status" jdbcType="VARCHAR" />
+		<result column="URL" property="url" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="MONTOR_CONDITION">
+		<trim suffixOverrides="and">
+			<if test="id!=null">id=#{id} and</if>
+			<if test="parkingId!=null">parkingId=#{parkingId} and</if>
+			<if test="zoneId!=null">zoneId=#{zoneId} and</if>
+			<if test="url!=null">url=#{url} and</if>
+			<if test="statusId!=null">statusId=#{statusId} and</if>
+		</trim>
+	</sql>
+
+	<!-- <sql id="MONTOR_SET">
+		<trim suffixOverrides=",">
+			<if test="parkingId!=null">parkingId=#{parkingId} ,</if>
+			<if test="zoneId!=null">zoneId=#{zoneId} ,</if>
+			<if test="url!=null">url=#{url} ,</if>
+			<if test="statusId!=null">statusId=#{statusId} ,</if>
+		</trim>
+	</sql> -->
+
+
+	<delete id="delete" parameterType="Monitor">
+		DELETE FROM
+		MONITOR
+		<where>
+			<include refid="MONTOR_CONDITION"></include>
+		</where>
+	</delete>
+
+	<insert id="insert" parameterType="Monitor">
+		insert into MONITOR
+		(id,parkingId,zoneId, statusId,url)
+		values
+		(#{id,jdbcType=INTEGER},#{parkingId,jdbcType=INTEGER},#{zoneId,jdbcType=INTEGER},#{statusId,jdbcType=INTEGER},
+		#{url,jdbcType=VARCHAR})
+	</insert>
+
+<!-- 	<update id="update" parameterType="Monitor">
+		update MONITOR
+		<set>
+			<include refid="MONITOR_SET"></include>
+		</set>
+		<where>
+			<include refid="MONTOR_CONDITION"></include>
+		</where>
+	</update> -->
+
+	<select id="select" resultMap="BaseResultMap" parameterType="Monitor">
+		select MONITOR.id,
+		Monitor.parkingId,monitor.zoneId,monitor.url,monitor.statusId,parking.name
+		parkingName,status.text status,zone.name zoneName
+		from
+		MONITOR,PARKING,ZONE,STATUS
+		<where>
+			<include refid="MONTOR_CONDITION">
+			</include>
+		</where>
+		and MONITOR.ZONEID=ZONE.ID
+		and MONITOR.PARKINGID=PARKING.ID
+		and
+		MONITOR.STATUSID=STATUS.ID
+	</select>
+
+</mapper>

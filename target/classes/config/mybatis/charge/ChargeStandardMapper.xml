@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fire.modules.charge.mapper.ChargeStandardMapper">
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		charge_standard
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insert" parameterType="ChargeStandard">
+		insert into charge_standard
+		(id,
+		name, statusId,modeId)
+		values
+		(#{id,jdbcType=INTEGER},
+		#{name,jdbcType=VARCHAR},
+		#{statusId,jdbcType=INTEGER},
+		#{modeId,jdbcType=INTEGER}
+		)
+	</insert>
+
+	<update id="updateByPrimaryKey" parameterType="ChargeStandard">
+		update
+		charge_standard
+		set name = #{name},
+		statusId =#{statusId}
+		where id
+		=#{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultType="ChargeStandard"
+		parameterType="java.lang.Integer">
+		select charge_standard.id, name, status.text status
+		from
+		charge_standard,status
+		where id = #{id,jdbcType=INTEGER}
+		and
+		charge_standard.statusId=status.id
+	</select>
+
+	<select id="selectAll" resultType="ChargeStandard">
+		select charge_standard.id,
+		charge_standard.name, status.text
+		status,charge_standard.statusId,charge_mode.name mode
+		from
+		charge_standard,status,charge_mode
+		where charge_standard.statusId =
+		status.id
+		and charge_standard.modeId=charge_mode.id
+	</select>
+
+	<select id="checkStandard" resultType="ChargeStandard">
+		select DISTINCT *
+		from
+		charge_standard
+		where
+		charge_standard.name=#{standardName}
+	</select>
+
+</mapper>

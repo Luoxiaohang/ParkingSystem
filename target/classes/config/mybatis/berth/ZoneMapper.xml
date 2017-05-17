@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fire.modules.berth.mapper.ZoneMapper">
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		zone
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insert" parameterType="Zone">
+		insert into zone
+		(name,statusId,parkingId,chargingStandardId)
+		values
+		(#{name,jdbcType=VARCHAR},
+		#{statusId,jdbcType=INTEGER},
+		#{parkingId,jdbcType=INTEGER},
+		#{chargingStandardId,jdbcType=INTEGER}
+		)
+	</insert>
+
+	<update id="updateByPrimaryKey" parameterType="Zone">
+		update zone
+		set
+		name= #{name},
+		statusId =#{statusId},
+		chargingStandardId=#{chargingStandardId}
+		where id=#{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultType="Zone" parameterType="java.lang.Integer">
+		select zone.id, zone.name,parking.name parkingName,
+		status.text
+		status,parkingId,zone.statusId,charge_standard.name
+		chargeStandardName,chargingStandardId,charge_mode.id chargeModeId,charge_mode.name chargeModeName
+		from
+		zone,status,charge_standard,parking,charge_mode
+		where zone.statusId
+		= status.id
+		and
+		charge_standard.id=zone.chargingStandardId
+		and zone.parkingId=parking.id
+		and charge_standard.modeId=charge_mode.id
+		and
+		zone.id =#{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectAll" resultType="Zone">
+		select zone.id, zone.name,parking.name parkingName,
+		status.text
+		status,parkingId,zone.statusId,charge_standard.name
+		chargeStandardName,chargingStandardId,charge_mode.id chargeModeId,charge_mode.name chargeModeName
+		from
+		zone,status,charge_standard,parking,charge_mode
+		where zone.statusId
+		= status.id
+		and
+		charge_standard.id=zone.chargingStandardId
+		and zone.parkingId=parking.id
+		and charge_standard.modeId=charge_mode.id
+	</select>
+
+	<select id="checkZone" resultType="Zone">
+		select DISTINCT *
+		from
+		zone
+		where
+		zone.name=#{zoneName}
+	</select>
+
+</mapper>
