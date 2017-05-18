@@ -79,7 +79,7 @@ Ext.define('MyApp.monitor.view.monitor_manage', {
 				align : 'center'
 			}, {
 				header : '地址',
-				dataIndex : 'statusId',
+				dataIndex : 'url',
 				flex : 3
 			}, {
 				header : '状态',

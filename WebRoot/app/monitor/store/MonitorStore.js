@@ -1,6 +1,6 @@
 Ext.define("MyApp.monitor.store.MonitorStore", {
 	extend : 'Ext.data.Store',
-	model : 'MyApp.system.model.StatusModel',
+	model : 'MyApp.monitor.model.MonitorModel',
 	autoLoad : true,
 	proxy : {
 		type : 'ajax',

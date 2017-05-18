@@ -4,7 +4,19 @@ Ext.define('MyApp.monitor.model.MonitorModel', {
 		name : 'id',
 		type : 'int'
 	}, {
-		name : 'name',
+		name : 'url',
 		type : 'string'
-	} ]
+	}, {
+		name : 'parkingName',
+		type : 'string'
+	}, {
+		name : 'zoneName',
+		type : 'string'
+	}, {
+		name : 'status',
+		type : 'string'
+	}, {
+		name : 'statusId',
+		type : 'int'
+	}, ]
 });

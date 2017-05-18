@@ -23,19 +23,54 @@ public class MonitorController {
 	@ResponseBody
 	@RequestMapping(value = "/getMonitorList", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	private BaseDTO<Monitor> getMonitorUrlList(int zoneId) {
-		List<Monitor> status;
+		List<Monitor> monitors;
 		if (zoneId == -1) {
-			status = ms.getAllMonitors();
+			monitors = ms.getAllMonitors();
 		} else {
-			status = ms.getMonitorsByZoneId(zoneId);
+			monitors = ms.getMonitorsByZoneId(zoneId);
 		}
 
 		BaseDTO<Monitor> result = new BaseDTO<Monitor>();
-		if (null != status && status.size() != 0) {
+		if (null != monitors) {
 			result.setSuccess(true);
-			result.setList(status);
+			result.setList(monitors);
 		}
 		return result;
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "/addMonitor", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	private BaseDTO<Monitor> addMonitor(Monitor monitor) {
+		BaseDTO<Monitor> result = new BaseDTO<Monitor>();
+		boolean success = ms.addMonitor(monitor);
+		if (!success) {
+			result.setMsg("添加失败");
+		}
+		result.setSuccess(success);
+		return result;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/editMonitor", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	private BaseDTO<Monitor> editMonitor(Monitor monitor) {
+		BaseDTO<Monitor> result = new BaseDTO<Monitor>();
+		boolean success = ms.updateMonitor(monitor);
+		if (!success) {
+			result.setMsg("添加失败");
+		}
+		result.setSuccess(success);
+		return result;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/delMonitor", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	private BaseDTO<Monitor> delMonitor(Monitor monitor) {
+		BaseDTO<Monitor> result = new BaseDTO<Monitor>();
+		boolean success = ms.delMonitor(monitor);
+		if (!success) {
+			result.setMsg("添加失败");
+		}
+		result.setSuccess(success);
+		return result;
+	}
 }

@@ -13,7 +13,7 @@
 		<result column="URL" property="url" jdbcType="VARCHAR" />
 	</resultMap>
 
-	<sql id="MONTOR_CONDITION">
+	<sql id="MONITOR_CONDITION">
 		<trim suffixOverrides="and">
 			<if test="id!=null">id=#{id} and</if>
 			<if test="parkingId!=null">parkingId=#{parkingId} and</if>
@@ -23,41 +23,40 @@
 		</trim>
 	</sql>
 
-	<!-- <sql id="MONTOR_SET">
+	<sql id="MONITOR_SET">
 		<trim suffixOverrides=",">
-			<if test="parkingId!=null">parkingId=#{parkingId} ,</if>
+			<if test="id!=null">id=#{id} ,</if>
+			<if test="parkingId!=null">parkingId=#{parkingId},</if>
 			<if test="zoneId!=null">zoneId=#{zoneId} ,</if>
-			<if test="url!=null">url=#{url} ,</if>
+			<if test="url!=null">url=#{url},</if>
 			<if test="statusId!=null">statusId=#{statusId} ,</if>
 		</trim>
-	</sql> -->
+	</sql>
 
 
 	<delete id="delete" parameterType="Monitor">
 		DELETE FROM
 		MONITOR
 		<where>
-			<include refid="MONTOR_CONDITION"></include>
+			<include refid="MONITOR_CONDITION" />
 		</where>
 	</delete>
 
 	<insert id="insert" parameterType="Monitor">
 		insert into MONITOR
-		(id,parkingId,zoneId, statusId,url)
+		(parkingId,zoneId, statusId,url)
 		values
-		(#{id,jdbcType=INTEGER},#{parkingId,jdbcType=INTEGER},#{zoneId,jdbcType=INTEGER},#{statusId,jdbcType=INTEGER},
+		(#{parkingId,jdbcType=INTEGER},#{zoneId,jdbcType=INTEGER},#{statusId,jdbcType=INTEGER},
 		#{url,jdbcType=VARCHAR})
 	</insert>
 
-<!-- 	<update id="update" parameterType="Monitor">
+	<update id="update" parameterType="Monitor">
 		update MONITOR
 		<set>
-			<include refid="MONITOR_SET"></include>
+			<include refid="MONITOR_SET" />
 		</set>
-		<where>
-			<include refid="MONTOR_CONDITION"></include>
-		</where>
-	</update> -->
+		where MONITOR.Id=#{id}
+	</update>
 
 	<select id="select" resultMap="BaseResultMap" parameterType="Monitor">
 		select MONITOR.id,
@@ -66,13 +65,13 @@
 		from
 		MONITOR,PARKING,ZONE,STATUS
 		<where>
-			<include refid="MONTOR_CONDITION">
-			</include>
+			<include refid="MONITOR_CONDITION" />
+			and MONITOR.ZONEID=ZONE.ID
+			and MONITOR.PARKINGID=PARKING.ID
+			and
+			MONITOR.STATUSID=STATUS.ID
 		</where>
-		and MONITOR.ZONEID=ZONE.ID
-		and MONITOR.PARKINGID=PARKING.ID
-		and
-		MONITOR.STATUSID=STATUS.ID
+
 	</select>
 
 </mapper>

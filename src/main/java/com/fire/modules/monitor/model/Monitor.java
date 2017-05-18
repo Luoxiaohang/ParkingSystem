@@ -10,7 +10,7 @@ public class Monitor implements Serializable {
 
 	private Integer parkingId;
 	private String parkingName;
-	private Integer ZoneId;
+	private Integer zoneId;
 	private String zoneName;
 	private String url;
 	private Integer statusId;
@@ -41,11 +41,11 @@ public class Monitor implements Serializable {
 	}
 
 	public Integer getZoneId() {
-		return ZoneId;
+		return zoneId;
 	}
 
 	public void setZoneId(Integer zoneId) {
-		ZoneId = zoneId;
+		this.zoneId = zoneId;
 	}
 
 	public String getZoneName() {
@@ -83,7 +83,7 @@ public class Monitor implements Serializable {
 	@Override
 	public String toString() {
 		return "Monitor [id=" + id + ", parkingId=" + parkingId
-				+ ", parkingName=" + parkingName + ", ZoneId=" + ZoneId
+				+ ", parkingName=" + parkingName + ", zoneId=" + zoneId
 				+ ", zoneName=" + zoneName + ", url=" + url + ", statusId="
 				+ statusId + ", status=" + status + "]";
 	}
