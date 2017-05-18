@@ -11,6 +11,6 @@ public interface MonitorMapper {
 
 	List<Monitor> select(Monitor monitor);
 
-	// int update(Monitor monitor);
+	int update(Monitor monitor);
 
 }
