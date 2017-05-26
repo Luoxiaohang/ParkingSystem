@@ -20,7 +20,6 @@ import com.fire.modules.berth.model.BerthBook;
 import com.fire.modules.berth.service.BerthService;
 import com.fire.modules.charge.service.ChargeService;
 import com.fire.modules.user.model.Users;
-import com.fire.utils.SpringContextHolder;
 import com.fire.utils.TimeUtils;
 
 @Controller
@@ -137,8 +136,6 @@ public class BerthController {
 	@RequestMapping(value = "/unBookBerth", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	private BaseDTO<BerthBook> unBookBerth(HttpServletRequest request,
 			BerthBook berthBook) {
-		Users user = (Users) request.getSession().getAttribute(
-				ConstantInfo.CURRENT_USER);
 		boolean success = berthService.unBookBerth(berthBook);
 		BaseDTO<BerthBook> result = new BaseDTO<BerthBook>();
 		if (success) {

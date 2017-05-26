@@ -2,8 +2,6 @@ package com.fire.modules.user.serviceImpl;
 
 import java.util.List;
 
-import javax.mail.MessagingException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,7 +13,6 @@ import com.fire.common.bean.Email;
 import com.fire.modules.user.mapper.UsersMapper;
 import com.fire.modules.user.model.Users;
 import com.fire.modules.user.serviceI.UserServiceI;
-import com.fire.utils.EmailUtils;
 import com.fire.utils.StringUtils;
 
 @Service("userService")

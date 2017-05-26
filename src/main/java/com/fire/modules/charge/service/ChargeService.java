@@ -31,7 +31,8 @@ public class ChargeService {
 		}
 		return 0;
 	}
-
+	
+	@SuppressWarnings("deprecation")
 	private float getTimingCost(int standardId, Date fromDate, Date toDate,
 			boolean isVIP) {
 		// 获取日期间隔天数

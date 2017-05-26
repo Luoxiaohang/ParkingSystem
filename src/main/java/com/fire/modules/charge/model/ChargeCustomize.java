@@ -7,6 +7,11 @@ import org.apache.ibatis.type.Alias;
 
 @Alias("ChargeCustomize")
 public class ChargeCustomize implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Integer id;
 
 	private String name;

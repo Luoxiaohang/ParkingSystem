@@ -6,6 +6,11 @@ import org.apache.ibatis.type.Alias;
 
 @Alias("Monitor")
 public class Monitor implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Integer id;
 
 	private Integer parkingId;

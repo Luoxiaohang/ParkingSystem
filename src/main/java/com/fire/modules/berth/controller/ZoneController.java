@@ -74,6 +74,6 @@ public class ZoneController {
 	private boolean editZone(Zone zone) {
 		System.out.println(zone.toString());
 		boolean success = zoneService.editZone(zone);
-		return false;
+		return success;
 	}
 }

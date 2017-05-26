@@ -8,7 +8,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.httpclient.HttpException;
-import org.apache.log4j.Logger;
 
 import com.fire.common.ConstantInfo;
 

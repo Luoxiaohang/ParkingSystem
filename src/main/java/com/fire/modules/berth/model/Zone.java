@@ -6,6 +6,10 @@ import org.apache.ibatis.type.Alias;
 
 @Alias("Zone")
 public class Zone implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String name;
 	private Integer parkingId;

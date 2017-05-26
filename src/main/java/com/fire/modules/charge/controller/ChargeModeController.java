@@ -12,11 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fire.common.ConstantInfo;
-import com.fire.common.base.BaseDTO;
 import com.fire.modules.charge.model.ChargeStandard;
 import com.fire.modules.charge.service.ChargeModeService;
-import com.fire.modules.charge.service.ChargeStandardService;
 
 @Controller
 @RequestMapping("/ChargeMode")

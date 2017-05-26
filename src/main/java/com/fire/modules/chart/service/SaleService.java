@@ -26,6 +26,7 @@ public class SaleService {
 	 * 
 	 * @return
 	 */
+	@SuppressWarnings("deprecation")
 	public List<Sale> getSalePersentByMonth() {
 		List<Sale> result = new ArrayList<Sale>();
 		Date date = new Date();

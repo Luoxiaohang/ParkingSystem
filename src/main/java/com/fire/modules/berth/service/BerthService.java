@@ -42,8 +42,9 @@ public class BerthService {
 
 			for (BerthBook record : reocords) {
 				// 判断当前时间是否在预订时间内,如果在,则判断该订单用户是否是当前用户，如果是则置为已预订，否则为不可预订
-				if (TimeUtils.isOverlapping(fromDate, toDate,
-						record.getFromTime(), record.getToTime())) {
+				if (record.getStatusId() != ConstantInfo.STATUS_CANCLE
+						&& TimeUtils.isOverlapping(fromDate, toDate,
+								record.getFromTime(), record.getToTime())) {
 					booked = true;
 					if (record.getUserId() == userId) {
 						berth.setStatusId(ConstantInfo.STATUS_BOOKED);
@@ -76,15 +77,13 @@ public class BerthService {
 		return getMapper().getByZoneId(zoneId);
 	}
 
-
 	/**
-	 * 添加收费时间段
+	 * 添加车位
 	 * 
 	 * @param berth
 	 * @return
 	 */
 	public boolean addBerth(Berth berth) {
-		// 获取当前收费标准的收费时间段
 		int id = getMapper().insert(berth);
 		if (id != -1) {
 			return true;
@@ -93,7 +92,7 @@ public class BerthService {
 	}
 
 	/**
-	 * 删除收费时间段
+	 * 删除车位
 	 * 
 	 * @param customize
 	 * @return
@@ -107,7 +106,7 @@ public class BerthService {
 	}
 
 	/**
-	 * 修改模块
+	 * 修改车位信息
 	 * 
 	 * @param module
 	 * @return
@@ -135,7 +134,6 @@ public class BerthService {
 		record.setFromTime(book.getFromTime());
 		record.setToTime(book.getToTime());
 		List<BerthBook> records = getMapper().getBookedBerths(record);
-
 		if (records.size() != 0) {
 			return false;
 		}

@@ -1,7 +1,6 @@
 package com.fire.common.base;
 
 import java.util.List;
-import java.util.Map;
 
 public class BaseService<T> {
 
@@ -41,20 +40,7 @@ public class BaseService<T> {
 		getMapper().updateBySelective(t);
 	}
 
-	/**
-	 * 根据id删除记录
-	 * 
-	 * @param ids
-	 * @throws Exception
-	 */
-	public void delete(Long... ids) throws Exception {
-		if (ids == null || ids.length < 1) {
-			return;
-		}
-		for (Long id : ids) {
-			getMapper().delete(id);
-		}
-	}
+
 
 	/**
 	 * 根据id查找记录记录，返回单条记录
@@ -63,8 +49,8 @@ public class BaseService<T> {
 	 * @return
 	 * @throws Exception
 	 */
-	public T selectById(Long id) throws Exception {
-		return getMapper().selectById(id);
+	public T selectById(Integer id) throws Exception {
+		return getMapper().selectByPrimaryKey(id);
 	}
 
 	/**
@@ -78,16 +64,7 @@ public class BaseService<T> {
 		return getMapper().selectByModelCount(model);
 	}
 
-	/**
-	 * 根据map查询总数
-	 * 
-	 * @param Id
-	 * @return
-	 * @throws Exception
-	 */
-	public Integer selectByMapCount(Map map) throws Exception {
-		return getMapper().selectByMapCount(map);
-	}
+
 
 	/**
 	 * 根据map查询list记录，分页,默认10条
@@ -97,19 +74,7 @@ public class BaseService<T> {
 	 * @throws Exception
 	 */
 	public List<T> selectByModel(BaseModel model) throws Exception {
-		Integer rowCount = selectByModelCount(model);
 		return getMapper().selectByModel(model);
-	}
-
-	/**
-	 * 根据map查询list记录，不分页。
-	 * 
-	 * @param Id
-	 * @return
-	 * @throws Exception
-	 */
-	public List<T> selectByMap(Map map) throws Exception {
-		return getMapper().selectByMap(map);
 	}
 
 }

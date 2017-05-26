@@ -10,10 +10,7 @@ import com.fire.common.ConstantInfo;
 import com.fire.modules.berth.mapper.ZoneMapper;
 import com.fire.modules.berth.model.Berth;
 import com.fire.modules.berth.model.Zone;
-import com.fire.modules.charge.model.ChargeCustomize;
-import com.fire.modules.charge.service.ChargeCustomizeService;
 import com.fire.utils.SpringContextHolder;
-import com.fire.utils.TimeUtils;
 
 @Service("ZoneService")
 public class ZoneService {
@@ -101,8 +98,6 @@ public class ZoneService {
 		List<Zone> zones = getMapper().selectAll();
 		// 获取每个区域的车位
 		BerthService bs = SpringContextHolder.getBean("BerthService");
-		ChargeCustomizeService ccs = SpringContextHolder
-				.getBean("ChargeCustomizeService");
 		for (Zone zone : zones) {
 			// 设置状态
 			boolean full = true;

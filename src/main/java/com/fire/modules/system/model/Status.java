@@ -6,6 +6,11 @@ import org.apache.ibatis.type.Alias;
 
 @Alias("Status")
 public class Status implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Integer id;
 
 	private String name;
