@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50621
 File Encoding         : 65001
 
-Date: 2017-04-03 16:16:26
+Date: 2017-05-26 23:23:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -50,6 +50,7 @@ CREATE TABLE `berth_book_records` (
   `parkingId` int(11) NOT NULL,
   `zoneId` int(11) NOT NULL,
   `berthId` int(11) NOT NULL,
+  `carId` varchar(7) NOT NULL,
   `userId` int(11) NOT NULL,
   `bookTime` datetime NOT NULL,
   `fromTime` datetime NOT NULL,
@@ -65,14 +66,13 @@ CREATE TABLE `berth_book_records` (
   CONSTRAINT `berth_book_records_ibfk_1` FOREIGN KEY (`berthId`) REFERENCES `berth` (`id`),
   CONSTRAINT `berth_book_records_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `users` (`id`),
   CONSTRAINT `berth_book_records_ibfk_3` FOREIGN KEY (`statusId`) REFERENCES `status` (`id`),
-  CONSTRAINT `berth_book_records_ibfk_4` FOREIGN KEY (`standardId`) REFERENCES `charging_standard` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+  CONSTRAINT `berth_book_records_ibfk_4` FOREIGN KEY (`standardId`) REFERENCES `charge_standard` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of berth_book_records
 -- ----------------------------
-INSERT INTO `berth_book_records` VALUES ('18', '1', '1', '1', '1', '2017-03-31 00:59:30', '2017-03-31 00:59:15', '1', '2017-03-31 01:59:16', '60', '8');
-INSERT INTO `berth_book_records` VALUES ('19', '1', '2', '2', '1', '2017-03-31 01:01:50', '2017-03-31 01:01:43', '1', '2017-03-31 01:03:44', '60', '8');
+INSERT INTO `berth_book_records` VALUES ('73', '1', '1', '1', '88888', '1', '2017-05-26 21:22:15', '2017-05-26 21:22:00', '1', '2017-05-27 21:22:04', '168', '9');
 
 -- ----------------------------
 -- Table structure for car
@@ -89,10 +89,10 @@ CREATE TABLE `car` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for charging_customize
+-- Table structure for charge_customize
 -- ----------------------------
-DROP TABLE IF EXISTS `charging_customize`;
-CREATE TABLE `charging_customize` (
+DROP TABLE IF EXISTS `charge_customize`;
+CREATE TABLE `charge_customize` (
   `id` smallint(6) NOT NULL AUTO_INCREMENT,
   `startTime` time NOT NULL,
   `endTime` time NOT NULL,
@@ -101,31 +101,60 @@ CREATE TABLE `charging_customize` (
   `vipCost` float NOT NULL,
   PRIMARY KEY (`id`),
   KEY `chargingStandardId` (`chargingStandardId`),
-  CONSTRAINT `charging_customize_ibfk_1` FOREIGN KEY (`chargingStandardId`) REFERENCES `charging_standard` (`id`)
+  CONSTRAINT `charge_customize_ibfk_1` FOREIGN KEY (`chargingStandardId`) REFERENCES `charge_standard` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of charge_customize
+-- ----------------------------
+INSERT INTO `charge_customize` VALUES ('5', '00:00:00', '00:10:00', '1', '8', '5');
+INSERT INTO `charge_customize` VALUES ('6', '14:00:00', '23:30:00', '1', '5', '3');
+INSERT INTO `charge_customize` VALUES ('7', '00:00:00', '02:00:00', '6', '5', '2');
+
+-- ----------------------------
+-- Table structure for charge_mode
+-- ----------------------------
+DROP TABLE IF EXISTS `charge_mode`;
+CREATE TABLE `charge_mode` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `statusId` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `statusId` (`statusId`),
+  CONSTRAINT `charge_mode_ibfk_1` FOREIGN KEY (`statusId`) REFERENCES `status` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of charge_mode
+-- ----------------------------
+INSERT INTO `charge_mode` VALUES ('0', '时间段计费', '1');
+INSERT INTO `charge_mode` VALUES ('1', '梯度计费', '1');
+
+-- ----------------------------
+-- Table structure for charge_standard
+-- ----------------------------
+DROP TABLE IF EXISTS `charge_standard`;
+CREATE TABLE `charge_standard` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` char(40) NOT NULL,
+  `modeId` int(11) NOT NULL DEFAULT '0',
+  `statusId` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `statusId` (`statusId`),
+  KEY `charge_standard_ibfk_1` (`modeId`) USING BTREE,
+  CONSTRAINT `charge_standard_ibfk_2` FOREIGN KEY (`statusId`) REFERENCES `status` (`id`),
+  CONSTRAINT `charge_standard_ibfk_3` FOREIGN KEY (`modeId`) REFERENCES `charge_mode` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of charging_customize
+-- Records of charge_standard
 -- ----------------------------
-INSERT INTO `charging_customize` VALUES ('5', '00:00:00', '14:00:00', '1', '8', '5');
-INSERT INTO `charging_customize` VALUES ('6', '14:00:00', '23:30:00', '1', '5', '3');
-
--- ----------------------------
--- Table structure for charging_standard
--- ----------------------------
-DROP TABLE IF EXISTS `charging_standard`;
-CREATE TABLE `charging_standard` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` char(40) NOT NULL,
-  `statusId` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of charging_standard
--- ----------------------------
-INSERT INTO `charging_standard` VALUES ('1', 'ddd', '1');
-INSERT INTO `charging_standard` VALUES ('2', 'ttt', '1');
+INSERT INTO `charge_standard` VALUES ('1', 'ddd', '0', '1');
+INSERT INTO `charge_standard` VALUES ('2', 'ttt', '0', '1');
+INSERT INTO `charge_standard` VALUES ('3', 'ggggg', '0', '1');
+INSERT INTO `charge_standard` VALUES ('4', 'hhh', '0', '1');
+INSERT INTO `charge_standard` VALUES ('5', 'bbbb', '0', '1');
+INSERT INTO `charge_standard` VALUES ('6', 'tdd', '1', '1');
 
 -- ----------------------------
 -- Table structure for function
@@ -142,7 +171,7 @@ CREATE TABLE `function` (
   KEY `moduleId` (`moduleId`) USING BTREE,
   KEY `parentId` (`parentId`) USING BTREE,
   CONSTRAINT `function_ibfk_1` FOREIGN KEY (`moduleId`) REFERENCES `modules` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of function
@@ -152,13 +181,13 @@ INSERT INTO `function` VALUES ('2', '安全设置', 'MyApp.user.view.Secure_show
 INSERT INTO `function` VALUES ('3', '角色管理', 'MyApp.system.view.Role_show', '2', '1', '-1');
 INSERT INTO `function` VALUES ('4', '功能管理', 'MyApp.system.view.Function_show', '2', '1', '-1');
 INSERT INTO `function` VALUES ('5', '系统用户', 'MyApp.user.view.Sys_User_list', '1', '1', '-1');
-INSERT INTO `function` VALUES ('43', '查看车位信息', 'MyApp.berth.view.berth_show', '4', '1', '-1');
+INSERT INTO `function` VALUES ('43', '车位管理', 'MyApp.berth.view.berth_manage', '4', '1', '-1');
 INSERT INTO `function` VALUES ('44', '收费标准', 'MyApp.charge.view.charge_standard_show', '5', '1', '-1');
-INSERT INTO `function` VALUES ('45', '停车位使用记录', 'MyApp.record.view. berth_show', '7', '1', '-1');
-INSERT INTO `function` VALUES ('46', '查看停车记录', 'MyApp.record.view.park_show', '7', '1', '-1');
-INSERT INTO `function` VALUES ('47', '查看已预约车位', 'MyApp.berth.view.book_show', '4', '1', '-1');
+INSERT INTO `function` VALUES ('46', '历史订单', 'MyApp.record.view.order_show', '7', '1', '-1');
 INSERT INTO `function` VALUES ('48', '我的预订', 'MyApp.user.view.Berth_booked_show', '1', '1', '-1');
 INSERT INTO `function` VALUES ('49', '实时监控', 'MyApp.monitor.view.monitor_show', '8', '1', '-1');
+INSERT INTO `function` VALUES ('50', '车位信息', 'MyApp.berth.view.berth_show', '4', '1', '-1');
+INSERT INTO `function` VALUES ('51', '监控管理', 'MyApp.monitor.view.monitor_manage', '8', '1', '-1');
 
 -- ----------------------------
 -- Table structure for modules
@@ -180,6 +209,32 @@ INSERT INTO `modules` VALUES ('5', '收费管理');
 INSERT INTO `modules` VALUES ('6', '停车记录管理');
 INSERT INTO `modules` VALUES ('7', '历史记录');
 INSERT INTO `modules` VALUES ('8', '安全中心');
+
+-- ----------------------------
+-- Table structure for monitor
+-- ----------------------------
+DROP TABLE IF EXISTS `monitor`;
+CREATE TABLE `monitor` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parkingId` int(11) DEFAULT NULL,
+  `zoneId` int(11) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `statusId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `parkingId` (`parkingId`),
+  KEY `zoneId` (`zoneId`),
+  KEY `statusId` (`statusId`),
+  CONSTRAINT `monitor_ibfk_1` FOREIGN KEY (`parkingId`) REFERENCES `parking` (`id`),
+  CONSTRAINT `monitor_ibfk_2` FOREIGN KEY (`zoneId`) REFERENCES `zone` (`id`),
+  CONSTRAINT `monitor_ibfk_3` FOREIGN KEY (`statusId`) REFERENCES `status` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of monitor
+-- ----------------------------
+INSERT INTO `monitor` VALUES ('3', '1', '9', 'resource/video/test.mp4', '7');
+INSERT INTO `monitor` VALUES ('4', '1', '1', 'resource/video/test.mp4', '7');
+INSERT INTO `monitor` VALUES ('5', '1', '9', 'resource/video/test.mp4', '7');
 
 -- ----------------------------
 -- Table structure for parking
@@ -266,7 +321,7 @@ CREATE TABLE `role_functions` (
   CONSTRAINT `role_functions_ibfk_1` FOREIGN KEY (`roleId`) REFERENCES `role` (`id`),
   CONSTRAINT `role_functions_ibfk_2` FOREIGN KEY (`functionId`) REFERENCES `function` (`id`),
   CONSTRAINT `role_functions_ibfk_3` FOREIGN KEY (`moduleId`) REFERENCES `modules` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of role_functions
@@ -282,13 +337,14 @@ INSERT INTO `role_functions` VALUES ('9', '2', '2', '1');
 INSERT INTO `role_functions` VALUES ('10', '1', '1', '1');
 INSERT INTO `role_functions` VALUES ('49', '43', '1', '4');
 INSERT INTO `role_functions` VALUES ('50', '44', '1', '5');
-INSERT INTO `role_functions` VALUES ('51', '45', '1', '7');
 INSERT INTO `role_functions` VALUES ('52', '46', '1', '7');
 INSERT INTO `role_functions` VALUES ('53', '48', '1', '1');
 INSERT INTO `role_functions` VALUES ('54', '48', '3', '1');
 INSERT INTO `role_functions` VALUES ('55', '48', '2', '1');
 INSERT INTO `role_functions` VALUES ('56', '49', '1', '8');
 INSERT INTO `role_functions` VALUES ('57', '43', '2', '4');
+INSERT INTO `role_functions` VALUES ('58', '50', '1', '4');
+INSERT INTO `role_functions` VALUES ('59', '51', '1', '8');
 
 -- ----------------------------
 -- Table structure for status
@@ -299,7 +355,7 @@ CREATE TABLE `status` (
   `text` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `schoolid` (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of status
@@ -312,6 +368,7 @@ INSERT INTO `status` VALUES ('5', '未预定');
 INSERT INTO `status` VALUES ('6', '不可预订');
 INSERT INTO `status` VALUES ('7', '正常');
 INSERT INTO `status` VALUES ('8', '已支付');
+INSERT INTO `status` VALUES ('9', '已取消');
 
 -- ----------------------------
 -- Table structure for users
@@ -356,7 +413,7 @@ CREATE TABLE `zone` (
   KEY `chargingStandardId` (`chargingStandardId`),
   KEY `parkingId` (`parkingId`),
   CONSTRAINT `zone_ibfk_1` FOREIGN KEY (`statusId`) REFERENCES `status` (`id`),
-  CONSTRAINT `zone_ibfk_3` FOREIGN KEY (`chargingStandardId`) REFERENCES `charging_standard` (`id`),
+  CONSTRAINT `zone_ibfk_3` FOREIGN KEY (`chargingStandardId`) REFERENCES `charge_standard` (`id`),
   CONSTRAINT `zone_ibfk_4` FOREIGN KEY (`parkingId`) REFERENCES `parking` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
