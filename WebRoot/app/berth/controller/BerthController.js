@@ -225,6 +225,7 @@ Ext.define('MyApp.berth.controller.BerthController',
 								view.close();
 							},
 							FAIL : function() {
+								Ext.Msg.alert("抱歉", "当前车牌在当前时间已经预订的车位");
 								view.close();
 							}
 						});

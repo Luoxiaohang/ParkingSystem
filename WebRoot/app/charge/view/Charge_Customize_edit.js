@@ -3,7 +3,7 @@ Ext.define('MyApp.charge.view.Charge_Customize_edit', {
 	alias : 'widget.EditChargeCustomize',
 	requires : [ 'Ext.form.*' ],
 	id : 'EditChargeCustomize',
-	title : '添加收费时间段',
+	title : '修改收费时间段',
 	layout : 'anchor',
 	autoShow : true,
 	modal : true,
@@ -18,16 +18,16 @@ Ext.define('MyApp.charge.view.Charge_Customize_edit', {
 		var startTimeField = Ext.create("Ext.form.field.Time", {
 			fieldLabel : '开始时间',
 			xtype : 'timefield',
-			name : 'startTimeStr',
+			name : 'startTime',
 			width : 280,
 			labelSeparator : ':',
 			msgTarget : 'side',
 			autoFitErrors : false,
 			pickerMaxHeight : 200,
 			increment : 5,
-			value : this.customizeRecord.data.startTimeStr,
 			format : 'G:i:s',
 			invalidText : 'invalid format',
+			allowBlank : false,
 			listeners : {
 				select : function(combo) {
 					endTimeField.setMinValue(combo.getValue());
@@ -36,14 +36,14 @@ Ext.define('MyApp.charge.view.Charge_Customize_edit', {
 		});
 		var endTimeField = Ext.create("Ext.form.field.Time", {
 			fieldLabel : '结束时间',
-			name : 'endTimeStr',
+			name : 'endTime',
 			xtype : 'timefield',
-			value : this.customizeRecord.data.endTimeStr,
 			width : 280,
 			labelSeparator : ':',
 			msgTarget : 'side',
 			autoFitErrors : false,
 			pickerMaxHeight : 200,
+			allowBlank : false,
 			increment : 5,
 			format : 'G:i:s',
 			invalidText : 'invalid format',
@@ -66,6 +66,10 @@ Ext.define('MyApp.charge.view.Charge_Customize_edit', {
 				labelWidth : 120,
 			},
 			items : [ {
+				hidden : true,
+				name : 'id',
+				value : this.customizeRecord.data.id
+			}, {
 				hidden : true,
 				name : 'standardId',
 				value : this.standardRecord.data.id
@@ -97,13 +101,13 @@ Ext.define('MyApp.charge.view.Charge_Customize_edit', {
 							success : function(form, action) {
 								console.log(action);
 								if (action.result.success) {
-									Ext.getCmp('AddChargeCustomize').SUCCESS();
+									Ext.getCmp('EditChargeCustomize').SUCCESS();
 								} else {
-									Ext.getCmp('AddChargeCustomize').FAIL();
+									Ext.getCmp('EditChargeCustomize').FAIL();
 								}
 							},
 							failure : function(form, action) {
-								Ext.getCmp('AddChargeCustomize').FAIL();
+								Ext.getCmp('EditChargeCustomize').FAIL();
 							}
 						});
 					}

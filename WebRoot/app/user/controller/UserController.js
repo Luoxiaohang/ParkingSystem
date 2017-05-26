@@ -48,6 +48,9 @@ Ext
 							},
 							'#btn_berth_unbook' : {
 								click : this.onUnBookBtnClick
+							},
+							'ShowBookedBerth' : {
+								itemclick : this.onBookedBerthItemClick
 							}
 						});
 					},
@@ -110,6 +113,15 @@ Ext
 									store.load();
 								}
 							})
+						}
+					},
+					onBookedBerthItemClick : function(button) {
+						var record = this.getBookedBerthPanel()
+								.getSelectionModel().getSelection()[0];
+						if (record.data.status == "已取消") {
+							Ext.getCmp("btn_berth_unbook").setDisabled(true);
+						} else {
+							Ext.getCmp("btn_berth_unbook").setDisabled(false);
 						}
 					},
 
@@ -239,6 +251,7 @@ Ext
 					onUnBookBtnClick : function(btn, event) {
 						var record = this.getBookedBerthPanel()
 								.getSelectionModel().getSelection()[0];
+						var store = this.getBookedBerthPanel().getStore();
 						if (typeof record == 'undefined') {
 							this.noCheckTip('请选择记录!');
 						} else {
@@ -247,7 +260,6 @@ Ext
 										url : SYSTEM_CONTEXTPATH
 												+ "/Berth/unBookBerth",
 										method : "Post",
-										async : false,// 指定为同步方式
 										params : {
 											id : record.data.id
 										},
@@ -256,10 +268,14 @@ Ext
 													.decode(response.responseText)
 											if (result.success) {
 												Ext.Msg.alert('提示', "取消成功");
-												return true;
+												var view = Ext
+														.getCmp('tab-MyApp.record.view.order_show');
+												if (view) {
+													view.getStore().reload();
+												}
+												store.reload();
 											} else {
 												Ext.Msg.alert('错误', result.msg);
-												return false;
 											}
 										}
 									});

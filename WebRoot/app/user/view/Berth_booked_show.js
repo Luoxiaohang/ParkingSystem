@@ -12,39 +12,6 @@ Ext.define('MyApp.user.view.Berth_booked_show', {
 		xtype : 'toolbar',
 		dock : 'top',
 		items : [ {
-			xtype : 'form',
-			border : false,
-			layout : 'hbox',
-			items : [ {
-				xtype : 'datetimefield',
-				fieldLabel : '开始时间',
-				id : 'book_field_query_from_time',
-				name : 'toTimeStr',
-				labelWidth : 65,
-				margin : '0 5 0 5',
-				editable : false,
-				value : new Date(),
-				format : "Y-m-d H:i:s"
-			}, {
-				xtype : 'datetimefield',
-				fieldLabel : '结束时间',
-				id : 'book_field_query_to_time',
-				name : 'toTimeStr',
-				labelWidth : 65,
-				margin : '0 5 0 5',
-				editable : false,
-				value : function() {
-					var date = new Date();
-					date.setHours(date.getHours() + 1);
-					return date;
-				}(),
-				format : "Y-m-d H:i:s"
-			}, {
-				text : '查询',
-				xtype : 'button',
-				id : 'book_order_btn_query'
-			} ]
-		}, '->', {
 			id : 'btn_berth_unbook',
 			text : '取消预订',
 			tooltip : '取消预订',

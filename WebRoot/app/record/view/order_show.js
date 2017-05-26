@@ -3,6 +3,7 @@ Ext.define('MyApp.record.view.order_show', {
 	alias : 'widget.ShowOrder',
 	autoShow : true,
 	title : '我的预订',
+	id : 'ShowAllOrder',
 	margin : '3 3 3 0',
 	store : "MyApp.berth.store.BerthBookedStore",
 	layout : 'fit',

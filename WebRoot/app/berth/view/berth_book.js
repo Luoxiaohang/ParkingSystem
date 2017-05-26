@@ -22,7 +22,7 @@ Ext.define('MyApp.berth.view.berth_book', {
 			value : new Date(),
 			format : "Y-m-d H:i:s",
 			minValue : Ext.getCmp("berth_field_query_from_time").getRawValue(),
-			alowBlank : false,
+			allowBlank : false,
 			listeners : {
 				select : function(combo) {
 					endDateTimeField.setMinValue(combo.getValue());
@@ -34,7 +34,7 @@ Ext.define('MyApp.berth.view.berth_book', {
 			name : 'toTimeStr',
 			format : "Y-m-d H:i:s",
 			minValue : Ext.getCmp("berth_field_query_to_time").getRawValue(),
-			alowBlank : false
+			allowBlank : false
 		});
 		this.items = [ {
 			xtype : 'form',
@@ -76,7 +76,7 @@ Ext.define('MyApp.berth.view.berth_book', {
 			}, {
 				fieldLabel : '车牌',
 				name : 'carId',
-				alowBlank : false,
+				allowBlank : false
 			}, startDateTimeField, endDateTimeField ],
 			buttons : [
 					{
@@ -105,7 +105,7 @@ Ext.define('MyApp.berth.view.berth_book', {
 																}
 																 if(Ext.getCmp("manage_berth_panel")){
 																	 var berthStore = Ext.getCmp("manage_berth_panel").getStore();
-																	 berthStore.getProxy().extraParams.zoneId = Ext.getCmp("BookBerth").zoneRecord.data.id;
+																	 berthStore.getProxy().extraParams.zoneId = Ext.getCmp("BookBerth").zoneRecord.id;
 																	 berthStore.load();
 																 }
 																 Ext.getCmp("SaleChart").getStore().load();

@@ -136,7 +136,6 @@ Ext.define('MyApp.charge.controller.ChargeStandardController',
 				}
 			},
 			onCustomizeAddBtnClick : function(button) {
-
 				var record = this.getStandardList().getSelectionModel()
 						.getSelection()[0];
 				if (typeof record == 'undefined') {
@@ -156,6 +155,7 @@ Ext.define('MyApp.charge.controller.ChargeStandardController',
 							view.close();
 						},
 						FAIL : function() {
+							Ext.Msg.alert("错误","添加时间段重叠!");
 							view.close();
 						}
 					});
