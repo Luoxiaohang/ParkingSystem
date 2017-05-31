@@ -11,7 +11,7 @@ public interface ChargeStandardMapper {
 
 	ChargeStandard selectByPrimaryKey(Integer id);
 
-	List<ChargeStandard> selectAll();
+	List<ChargeStandard> selectByModel(ChargeStandard chargeStandard);
 
 	int updateByPrimaryKey(ChargeStandard record);
 

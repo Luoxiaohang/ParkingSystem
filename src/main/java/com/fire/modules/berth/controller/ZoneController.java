@@ -71,9 +71,10 @@ public class ZoneController {
 
 	@ResponseBody
 	@RequestMapping(value = "/editZone", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	private boolean editZone(Zone zone) {
-		System.out.println(zone.toString());
+	private BaseDTO<Zone> editZone(Zone zone) {
 		boolean success = zoneService.editZone(zone);
-		return success;
+		BaseDTO<Zone> result = new BaseDTO<>();
+		result.setSuccess(success);
+		return result;
 	}
 }

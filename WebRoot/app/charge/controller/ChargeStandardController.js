@@ -97,23 +97,23 @@ Ext.define('MyApp.charge.controller.ChargeStandardController',
 
 			},
 			onStandardEditBtnClick : function() {
-				var store = this.getModuleList().getStore();
-				var record = this.getModuleList().getSelectionModel()
+				var store = this.getStandardList().getStore();
+				var record = this.getStandardList().getSelectionModel()
 						.getSelection()[0];
 				if (typeof record == 'undefined') {
 					Ext.MessageBox.show({
 						title : '提示',
-						msg : '请选择要修改的模块!',
+						msg : '请选择要修改的收费标准!',
 						buttons : Ext.MessageBox.OK,
 						icon : Ext.MessageBox.WARNING
 					});
 				} else {
-					Ext.MessageBox.prompt("提示", "请输入新的模块名称？", function(btnId,
+					Ext.MessageBox.prompt("提示", "请输入新的标准名称", function(btnId,
 							text) {
 						if (btnId == "ok") {
 							Ext.Ajax.request({
 								url : SYSTEM_CONTEXTPATH
-										+ "/modules/editModule",
+										+ "/ChargeStandard/editStandard",
 								method : "Post",
 								params : {
 									id : record.data.id,

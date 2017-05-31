@@ -144,7 +144,7 @@
 		<if test="fromTime!=null ">
 			and records.fromTime &lt; #{toTime}
 		</if>
-		
+
 		<if test="toTime!=null ">
 			and records.toTime &gt; #{fromTime}
 		</if>
@@ -214,5 +214,15 @@
 		zone.chargingStandardId=charge_standard.id
 		and
 		charge_standard.modeId=charge_mode.id
+	</select>
+
+	<select id="getBookedRecordFromTimeBetweenDate" resultType="Users"
+		parameterType="BerthBook">
+		select users.nickName,users.phone
+		from
+		berth_book_records LEFT JOIN users
+		on berth_book_records.fromTime >= #{fromTime}
+		and berth_book_records.fromTime &lt; #{toTime}
+		and users.id=berth_book_records.userId
 	</select>
 </mapper>

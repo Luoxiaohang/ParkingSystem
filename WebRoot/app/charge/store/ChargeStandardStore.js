@@ -4,6 +4,9 @@ Ext.define("MyApp.charge.store.ChargeStandardStore", {
 	autoLoad : true,
 	proxy : {
 		type : 'ajax',
+		extraParams : {
+			modeId : -1
+		},
 		url : SYSTEM_CONTEXTPATH + '/ChargeStandard/getStandardList',
 		reader : {
 			type : 'json',

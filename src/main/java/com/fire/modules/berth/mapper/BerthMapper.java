@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fire.modules.berth.model.Berth;
 import com.fire.modules.berth.model.BerthBook;
+import com.fire.modules.user.model.Users;
 
 public interface BerthMapper {
 	int deleteByPrimaryKey(Integer id);
@@ -39,5 +40,7 @@ public interface BerthMapper {
 	void updateBookRecordByPrimaryKey(BerthBook berthBook);
 
 	List<BerthBook> getValidBookedRecords(BerthBook record);
+
+	List<Users> getBookedRecordFromTimeBetweenDate(BerthBook berthBook);
 
 }

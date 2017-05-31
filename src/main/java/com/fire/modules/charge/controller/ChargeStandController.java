@@ -1,9 +1,6 @@
 package com.fire.modules.charge.controller;
 
-import java.util.HashSet;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -26,10 +23,8 @@ public class ChargeStandController {
 
 	@ResponseBody
 	@RequestMapping(value = "/getStandardList", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	private List<ChargeStandard> getStandardList(HttpServletRequest request) {
-		HashSet<ChargeStandard> standards = new HashSet<>();
-		standards.addAll(standardService.getChargeStandards());
-		List<ChargeStandard> result =standardService.getChargeStandards();
+	private List<ChargeStandard> getStandardList(ChargeStandard chargeStandard) {
+		List<ChargeStandard> result =standardService.getChargeStandards(chargeStandard);
 		return result;
 	}
 
@@ -67,8 +62,10 @@ public class ChargeStandController {
 
 	@ResponseBody
 	@RequestMapping(value = "/editStandard", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	private boolean editStandard(ChargeStandard standard) {
+	private BaseDTO<ChargeStandard> editStandard(ChargeStandard standard) {
 		boolean success = standardService.editChargeStandard(standard);
-		return success;
+		BaseDTO<ChargeStandard> result = new BaseDTO<>();
+		result.setSuccess(success);
+		return result;
 	}
 }

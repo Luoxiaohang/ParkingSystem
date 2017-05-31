@@ -21,11 +21,13 @@ public class ChargeStandardService {
 	/**
 	 * 根据模块Id及角色Id获取子功能列表
 	 * 
+	 * @param modeId
+	 * 
 	 * @param modulId
 	 * @return
 	 */
-	public List<ChargeStandard> getChargeStandards() {
-		return getMapper().selectAll();
+	public List<ChargeStandard> getChargeStandards(ChargeStandard chargeStandard) {
+		return getMapper().selectByModel(chargeStandard);
 	}
 
 	/**
@@ -68,11 +70,8 @@ public class ChargeStandardService {
 	 * @return
 	 */
 	public boolean editChargeStandard(ChargeStandard standard) {
-		int id = getMapper().updateByPrimaryKey(standard);
-		if (id != -1) {
-			return true;
-		}
-		return false;
+		getMapper().updateByPrimaryKey(standard);
+		return true;
 	}
 
 	public boolean deleteChargeStandard(ChargeStandard fun) {

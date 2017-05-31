@@ -10,6 +10,7 @@ import com.fire.common.ConstantInfo;
 import com.fire.modules.berth.mapper.BerthMapper;
 import com.fire.modules.berth.model.Berth;
 import com.fire.modules.berth.model.BerthBook;
+import com.fire.modules.user.model.Users;
 import com.fire.utils.TimeUtils;
 
 @Service("BerthService")
@@ -182,5 +183,18 @@ public class BerthService {
 		record.setUserId(userId);
 		record.setToTime(date);
 		return getMapper().getValidBookedRecords(record);
+	}
+
+	/**
+	 * 获取预订记录开始时间在date和date2之间的预订记录
+	 * 
+	 * @param date
+	 * @param date2
+	 */
+	public List<Users> getBookedRecordFromTimeBetweenDate(Date date, Date date2) {
+		BerthBook bb=new BerthBook();
+		bb.setFromTime(date);
+		bb.setToTime(date2);
+		return getMapper().getBookedRecordFromTimeBetweenDate(bb);
 	}
 }

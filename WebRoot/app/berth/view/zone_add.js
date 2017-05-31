@@ -1,7 +1,7 @@
 Ext.define('MyApp.berth.view.zone_add', {
 	extend : 'Ext.window.Window',
 	alias : 'widget.AddZone',
-	requires : [ 'Ext.form.*'],
+	requires : [ 'Ext.form.*' ],
 	id : 'AddZone',
 	title : '添加区域',
 	layout : 'anchor',
@@ -14,6 +14,10 @@ Ext.define('MyApp.berth.view.zone_add', {
 	FAIL : null,
 
 	initComponent : function() {
+
+		var standardStore = Ext
+				.create("MyApp.charge.store.ChargeStandardStore");
+
 		this.items = [ {
 			xtype : 'form',
 			url : SYSTEM_CONTEXTPATH + '/Zone/addZone',
@@ -27,17 +31,34 @@ Ext.define('MyApp.berth.view.zone_add', {
 				labelWidth : 60,
 			},
 			items : [ {
-				fieldLabel : '模块名称',
+				fieldLabel : '区域名称',
 				name : 'name',
 				allowBlank : false,
 				emptyText : "(必填)"
+			}, {
+				xtype : 'combobox',
+				fieldLabel : '收费模式',
+				name : 'chargingModeId',
+				readyOnly : true,
+				allowBlank : false,
+				store : "MyApp.charge.store.ChargeModeStore",
+				displayField : 'name',
+				valueField : 'id',
+				emptyText : "请选择(必填)",
+				listeners : {
+					select : function(combo) {
+						var modeId = combo.getValue();
+						standardStore.proxy.extraParams.modeId = modeId;
+						standardStore.load();
+					}
+				}
 			}, {
 				xtype : 'combobox',
 				fieldLabel : '收费标准',
 				name : 'chargingStandardId',
 				readyOnly : true,
 				allowBlank : false,
-				store : "MyApp.charge.store.ChargeStandardStore",
+				store : standardStore,
 				displayField : 'name',
 				valueField : 'id',
 				emptyText : "请选择(必填)"

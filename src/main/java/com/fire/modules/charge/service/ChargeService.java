@@ -17,6 +17,15 @@ public class ChargeService {
 	@Autowired
 	private ChargeCustomizeService ccs;
 
+	/**
+	 * 获取停车费用
+	 * 
+	 * @param standardId
+	 * @param fromDate
+	 * @param toDate
+	 * @param isVIP
+	 * @return
+	 */
 	public float getCost(int standardId, Date fromDate, Date toDate,
 			boolean isVIP) {
 		if (fromDate == null || toDate == null) {
@@ -31,7 +40,10 @@ public class ChargeService {
 		}
 		return 0;
 	}
-	
+
+	/**
+	 * 获取时间段收费模式的停车费用
+	 */
 	@SuppressWarnings("deprecation")
 	private float getTimingCost(int standardId, Date fromDate, Date toDate,
 			boolean isVIP) {
@@ -93,6 +105,15 @@ public class ChargeService {
 		return totalCost;
 	}
 
+	/**
+	 * 获取梯度计费模式的停车费用
+	 * 
+	 * @param standardId
+	 * @param fromDate
+	 * @param toDate
+	 * @param isVIP
+	 * @return
+	 */
 	private float getGradientChargeCost(int standardId, Date fromDate,
 			Date toDate, boolean isVIP) {
 		float totalCost = 0;

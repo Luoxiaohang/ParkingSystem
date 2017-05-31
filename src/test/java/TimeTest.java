@@ -1,11 +1,11 @@
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.httpclient.HttpException;
+import com.fire.modules.berth.service.BerthService;
+import com.fire.utils.SpringContextHolder;
 
-import com.fire.utils.SMSUtils;
 
 public class TimeTest {
 	public static void main(String[] args) {
@@ -32,8 +32,16 @@ public class TimeTest {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-		
-		
-		System.out.println((float)5/2);
+		Runnable runnable = new Runnable() {  
+            public void run() { 
+    			
+    			//获取所有用户30m内进入预定时间的预定记录
+    			System.out.println(new Date());
+            }  
+        };  
+        ScheduledExecutorService service = Executors  
+                .newSingleThreadScheduledExecutor();  
+        // 第二个参数为首次执行的延时时间，第三个参数为定时执行的间隔时间  
+        service.scheduleAtFixedRate(runnable, 2, 5, TimeUnit.SECONDS);
 	}
 }

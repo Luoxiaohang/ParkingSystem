@@ -125,10 +125,11 @@ Ext.define('MyApp.berth.controller.BerthController',
 					var view = Ext.widget('EditZone', {
 						record : record,
 						SUCCESS : function() {
-							store.reload();
+							store.load();
 							view.close();
 						},
 						FAIL : function() {
+							store.load();
 							view.close();
 						}
 					});

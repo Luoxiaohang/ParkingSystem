@@ -34,10 +34,31 @@ Ext.define('MyApp.monitor.view.monitor_show', {
 												closable : false,
 												collapsible : false,
 												height : 255,
+												listeners: {
+													render: function(c) {
+										                c.body.on('click', function(panel) { 
+										                	Ext.create('Ext.window.Window',{
+										                		width: 900,
+										                	    height: 600,
+										                	    autoShow:true,
+										                	    border:false,
+										                	    resizable:false,
+										                	    items:[{ 
+											                	    height: 600,
+											                	    border:false,
+										                	    	html : '<video width="900" height="600"'
+																	+ 'src="'+panel.target.currentSrc+'"'
+																	+ ' autoplay="autoplay" loop="loop" muted="muted">'
+																	+ '</video>'}]
+										                	    });
+										                    });
+									                },
+										            scope: this
+												},
 												html : '<video width="380" height="260" '
 													+ 'src="'+url+'"'
 													+ ' autoplay="autoplay" loop="loop" muted="muted">'
-													+ '</video>'
+													+ '</video>',
 											});
 											groupPanel.add(monitorPanel);
 										}
