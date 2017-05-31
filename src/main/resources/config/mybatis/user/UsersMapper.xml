@@ -15,18 +15,20 @@
 		<result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
 		<result column="roleId" property="roleId" jdbcType="INTEGER" />
 	</resultMap>
+	
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from users
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
+	
 	<insert id="insert" parameterType="Users">
-		insert into users (id,
+		insert into users (
 		account, nickName,
 		gender, Email, phone,
 		password, 
 		roleId,address,QQ,birthday
 		)
-		values (#{id,jdbcType=INTEGER},
+		values (
 		#{account,jdbcType=VARCHAR},
 		#{nickName,jdbcType=VARCHAR},
 		#{gender,jdbcType=INTEGER},
@@ -36,7 +38,7 @@
 		#{roleId,jdbcType=INTEGER},
 		#{address,jdbcType=INTEGER},
 		#{QQ,jdbcType=INTEGER},
-		#{birthday,jdbcType=INTEGER},
+		#{birthday,jdbcType=INTEGER}
 		)
 	</insert>
 	<update id="updateByPrimaryKey" parameterType="Users">
@@ -148,7 +150,7 @@
 
 	<select id="getSystemUserList" resultMap="BaseResultMap">
 		select
-		users.id,address,QQ,birthday
+		users.id,address,QQ,birthday,
 		account,
 		nickName,
 		gender, Email, phone,

@@ -42,7 +42,7 @@ public interface ConstantInfo {
 	/**
 	 * 普通用户
 	 */
-	int SYSTEM_ROLE_USER = 4;
+	int SYSTEM_ROLE_USER = 3;
 
 	/**
 	 * 未满
