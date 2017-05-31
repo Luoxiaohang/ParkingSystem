@@ -97,7 +97,9 @@ Ext.define('MyApp.user.view.Sys_User_list', {
 			switch (value) {
 			case 1:
 				return "系统管理员";
-			case 4:
+			case 2:
+				return "会员";
+			case 3:
 				return "普通成员";
 			}
 		}
