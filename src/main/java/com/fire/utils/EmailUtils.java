@@ -12,7 +12,7 @@ import com.fire.common.ConstantInfo;
 
 public class EmailUtils {
 
-	public static void sendSMSMsg() {
+	public static void sendEmailMsg() {
 
 		BlockingQueue<Runnable> queue = new LinkedBlockingQueue<Runnable>(20000);
 		final ThreadPoolExecutor executors = new ThreadPoolExecutor(5, 6,
@@ -37,12 +37,11 @@ public class EmailUtils {
 						executors.execute(ms);
 					}
 					doneSignal.await();
+					ConstantInfo.SMS_HOLDER.clear();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}// 等待所有计数器线程执行完
-
-				ConstantInfo.SMS_HOLDER.clear();
 			}
 		};
 		ScheduledExecutorService service = Executors

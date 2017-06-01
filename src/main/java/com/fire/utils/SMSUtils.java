@@ -19,30 +19,34 @@ public class SMSUtils {
 	private static List<Users> records;
 
 	public static void sendSMSMsg() {
-
 		BlockingQueue<Runnable> queue = new LinkedBlockingQueue<Runnable>(20000);
-		final ThreadPoolExecutor executors = new ThreadPoolExecutor(5, 6,
-				60000, TimeUnit.SECONDS, queue);
+		final ThreadPoolExecutor executors = new ThreadPoolExecutor(5, 10,
+				2000, TimeUnit.SECONDS, queue);
 
 		Runnable runnable = new Runnable() {
 			public void run() {
 				try {
+					System.out.println("开始发送SMS");
 					BerthService bs = SpringContextHolder
 							.getBean("BerthService");
 					// 获取当前时间
 					Date date = new Date();
-					date.setMinutes(date.getMinutes() + 30);
+					date.setMinutes(date.getMinutes() + 2);
 					// 获取所有用户30m内进入预定时间的预定记录
 					records = bs.getBookedRecordFromTimeBetweenDate(new Date(),
 							date);
+					System.out.println(records.toString());
 					for (int i = 0; i < records.size(); i++) {
 						SMS sms = new SMS();
-						sms.setToTel(records.get(i).getPhone());
-						sms.setContent("您预定的车位将在30分钟后开始生效");
-						ConstantInfo.SMS_HOLDER.add(sms);
+						Users user = records.get(i);
+						if (null != user) {
+							sms.setToTel(records.get(i).getPhone());
+							sms.setContent("您预定的车位将在2分钟后开始生效");
+							ConstantInfo.SMS_HOLDER.add(sms);
+						}
 					}
 					// 要推送的用户总数
-					int count = records.size();
+					int count = ConstantInfo.SMS_HOLDER.size();
 					// 初始每个线程处理的用户数量
 					final int eveLength = 2000;
 					// 计算处理所有用户需要的线程数量
@@ -58,6 +62,7 @@ public class SMSUtils {
 						executors.execute(ms);
 					}
 					doneSignal.await();// 等待所有计数器线程执行完
+					ConstantInfo.SMS_HOLDER.clear();
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -67,6 +72,6 @@ public class SMSUtils {
 		ScheduledExecutorService service = Executors
 				.newSingleThreadScheduledExecutor();
 		// 第二个参数为首次执行的延时时间，第三个参数为定时执行的间隔时间
-		service.scheduleAtFixedRate(runnable, 1, 30, TimeUnit.MINUTES);
+		service.scheduleAtFixedRate(runnable, 1, 2, TimeUnit.MINUTES);
 	}
 }

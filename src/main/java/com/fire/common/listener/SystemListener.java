@@ -15,7 +15,7 @@ public class SystemListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
-		EmailUtils.sendSMSMsg();
+		EmailUtils.sendEmailMsg();
 		SMSUtils.sendSMSMsg();
 	}
 }

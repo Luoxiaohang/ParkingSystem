@@ -36,8 +36,7 @@ public class EmailSendThread implements Runnable {
 	public void run() {
 		try {
 			for (int i = page * eveLength; i < (page + 1) * eveLength
-					&& (page + 1) * eveLength < ConstantInfo.EMAIL_HOLDER
-							.size(); i++) {
+					&& i < ConstantInfo.EMAIL_HOLDER.size(); i++) {
 				Email email = ConstantInfo.EMAIL_HOLDER.get(i);
 				sendEmail(email);
 				logger.info("Send Email" + email.toString());

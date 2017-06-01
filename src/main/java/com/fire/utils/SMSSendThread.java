@@ -28,10 +28,9 @@ public class SMSSendThread implements Runnable {
 	public void run() {
 		try {
 			for (int i = page * eveLength; i < (page + 1) * eveLength
-					&& (page + 1) * eveLength < ConstantInfo.SMS_HOLDER.size(); i++) {
+					&& i < ConstantInfo.SMS_HOLDER.size(); i++) {
 				SMS sms = ConstantInfo.SMS_HOLDER.get(i);
-				logger.info("Send SMS:" + sms.toString());
-				
+				System.out.println("Send SMS:" + sms.toString());
 				HttpClient client = new HttpClient();
 				PostMethod post = new PostMethod(
 						"http://utf8.sms.webchinese.cn/");
