@@ -76,7 +76,9 @@ Ext.define('MyApp.berth.view.berth_book', {
 			}, {
 				fieldLabel : '车牌',
 				name : 'carId',
-				allowBlank : false
+				allowBlank : false,
+				regex : /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$/,
+				regexText : '车牌必须为7位',
 			}, startDateTimeField, endDateTimeField ],
 			buttons : [
 					{
@@ -105,7 +107,7 @@ Ext.define('MyApp.berth.view.berth_book', {
 																}
 																 if(Ext.getCmp("manage_berth_panel")){
 																	 var berthStore = Ext.getCmp("manage_berth_panel").getStore();
-																	 berthStore.getProxy().extraParams.zoneId = Ext.getCmp("BookBerth").zoneRecord.id;
+																	 berthStore.getProxy().extraParams.zoneId = Ext.getCmp("BookBerth").berthRecord.data.zoneId;
 																	 berthStore.load();
 																 }
 																 Ext.getCmp("SaleChart").getStore().load();
