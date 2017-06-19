@@ -64,7 +64,7 @@ public class ZoneController {
 			}
 		} catch (Exception e) {
 			result.setSuccess(false);
-			result.setMsg("请先从角色管理中删除角色对应的功能");
+			result.setMsg("请先删除当前区域的停车位");
 		}
 		return result;
 	}

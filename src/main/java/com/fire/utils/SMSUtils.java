@@ -41,7 +41,7 @@ public class SMSUtils {
 						Users user = records.get(i);
 						if (null != user) {
 							sms.setToTel(records.get(i).getPhone());
-							sms.setContent("您预定的车位将在2分钟后开始生效");
+							sms.setContent("您预定的车位将在30分钟后开始生效");
 							ConstantInfo.SMS_HOLDER.add(sms);
 						}
 					}

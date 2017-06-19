@@ -58,8 +58,8 @@ Ext.define('MyApp.charge.controller.ChargeStandardController',
 				});
 			},
 			onStandardDelBtnClick : function() {
-				var store = this.getModuleList().getStore();
-				var record = this.getModuleList().getSelectionModel()
+				var store = this.getStandardList().getStore();
+				var record = this.getStandardList().getSelectionModel()
 						.getSelection()[0];
 				if (typeof record == 'undefined') {
 					Ext.MessageBox.show({
@@ -69,12 +69,12 @@ Ext.define('MyApp.charge.controller.ChargeStandardController',
 						icon : Ext.MessageBox.WARNING
 					});
 				} else {
-					Ext.MessageBox.confirm("提示", "确定要删除当前模块？", function(btnId,
+					Ext.MessageBox.confirm("提示", "确定要删除当前标准？", function(btnId,
 							text) {
 						if (btnId == "yes") {
 							Ext.Ajax.request({
 								url : SYSTEM_CONTEXTPATH
-										+ "/modules/deleteModule",
+										+ "/ChargeStandard/deleteStandard",
 								method : "Post",
 								params : {
 									id : record.data.id

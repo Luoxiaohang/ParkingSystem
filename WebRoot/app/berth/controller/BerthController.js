@@ -84,7 +84,7 @@ Ext.define('MyApp.berth.controller.BerthController',
 					});
 				} else {
 					var store = this.getZoneList().getStore();
-					Ext.MessageBox.confirm("提示", "确定要删除当前模块？", function(btnId,
+					var view = Ext.MessageBox.confirm("提示", "确定要删除当前区域？", function(btnId,
 							text) {
 						if (btnId == "yes") {
 							Ext.Ajax.request({
@@ -97,9 +97,12 @@ Ext.define('MyApp.berth.controller.BerthController',
 									var result = Ext.JSON
 											.decode(response.responseText)
 									if (result.success) {
+										view.close();
 										Ext.Msg.alert('提示', "删除成功");
 										store.load();
+										
 									} else {
+										view.close();
 										Ext.Msg.alert('错误', result.msg);
 										store.load();
 									}

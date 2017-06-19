@@ -20,6 +20,7 @@ public class EmailUtils {
 		Runnable runnable = new Runnable() {
 			public void run() {
 				try {
+					System.out.println("启动发送邮件线程");
 					// 要推送的用户总数
 					int count = ConstantInfo.EMAIL_HOLDER.size();
 					// 初始每个线程处理的用户数量

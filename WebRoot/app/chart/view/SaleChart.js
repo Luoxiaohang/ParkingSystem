@@ -16,7 +16,7 @@ Ext.define('MyApp.chart.view.SaleChart',
 				label : {
 					renderer : Ext.util.Format.numberRenderer('0,0')
 				},
-				title : '销售额',
+				title : '营业额',
 				grid : true,
 				minimum : 0
 			}, {

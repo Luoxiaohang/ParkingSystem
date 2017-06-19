@@ -74,8 +74,8 @@ public class ChargeStandardService {
 		return true;
 	}
 
-	public boolean deleteChargeStandard(ChargeStandard fun) {
-		int id = getMapper().deleteByPrimaryKey(fun.getId());
+	public boolean deleteChargeStandard(ChargeStandard standard) {
+		int id = getMapper().deleteByPrimaryKey(standard.getId());
 		if (id != -1) {
 			return true;
 		}

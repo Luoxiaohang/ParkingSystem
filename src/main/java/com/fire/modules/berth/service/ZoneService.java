@@ -79,8 +79,8 @@ public class ZoneService {
 		return false;
 	}
 
-	public boolean deleteZone(Zone fun) {
-		int id = getMapper().deleteByPrimaryKey(fun.getId());
+	public boolean deleteZone(Zone zone) {
+		int id = getMapper().deleteByPrimaryKey(zone.getId());
 		if (id != -1) {
 			return true;
 		}

@@ -62,7 +62,7 @@ public class EmailSendThread implements Runnable {
 		// 此处填写你的账号
 		props.put("mail.user", "847149206@qq.com");
 		// 此处的密码就是前面说的16位STMP口令
-		props.put("mail.password", "wrtmtksjahlmbehh");
+		props.put("mail.password", "ybfvnqpwrnltbbjb");
 
 		// 构建授权信息，用于进行SMTP进行身份验证
 		Authenticator authenticator = new Authenticator() {
